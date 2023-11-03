@@ -1,10 +1,13 @@
 ---
-name: Custom issue template
-about: Describe this issue template's purpose here.
+name: 이슈 템플릿 생성
+about: 해당 이슈 템플릿을 사용하여 이슈를 생성해주세요
 title: ''
 labels: ''
 assignees: ''
 
 ---
 
-
+## (제목)
+### (페이지)
+- [ ] 구현내용 1
+- [ ] 구현내용 2
