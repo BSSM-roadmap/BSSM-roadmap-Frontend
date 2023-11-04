@@ -36,13 +36,40 @@ const Header = () => {
           gap={"1.5rem"}
           fontWeight={"medium"}
         >
-          <Flex fontSize={"0.9rem"} cursor={"pointer"}>
+          <Flex
+            fontSize={"0.9rem"}
+            cursor={"pointer"}
+            onClick={() => {
+              router.push("/roadMap");
+            }}
+          >
             로드맵보기
           </Flex>
-          <Flex fontSize={"0.9rem"} cursor={"pointer"}>
+          <Flex
+            fontSize={"0.9rem"}
+            cursor={"pointer"}
+            onClick={() => {
+              router.push("/map");
+            }}
+          >
+            협약회사위치
+          </Flex>
+          <Flex
+            fontSize={"0.9rem"}
+            cursor={"pointer"}
+            onClick={() => {
+              router.push("/companies");
+            }}
+          >
             학교협약회사
           </Flex>
-          <Flex fontSize={"0.9rem"} cursor={"pointer"}>
+          <Flex
+            fontSize={"0.9rem"}
+            cursor={"pointer"}
+            onClick={() => {
+              router.push("/createRoadMap");
+            }}
+          >
             로드맵작성
           </Flex>
         </Box>

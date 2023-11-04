@@ -27,9 +27,7 @@ const App = ({ Component, pageProps }: AppProps) => {
   return (
     <ChakraProvider theme={theme}>
       <Header />
-      <Box height={"93vh"}>
-        <Component {...pageProps} />
-      </Box>
+      <Component {...pageProps} />
     </ChakraProvider>
   );
 };
