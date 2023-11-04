@@ -1,4 +1,4 @@
-import { Box, Button, Flex, Text, theme } from "@chakra-ui/react";
+import { Box, Button, Flex, Text } from "@chakra-ui/react";
 import Image from "next/image";
 import RoadMapImage from "@/assets/roadmap.svg";
 import styled from "styled-components";

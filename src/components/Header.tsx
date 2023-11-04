@@ -61,7 +61,7 @@ const Header = () => {
               router.push("/companies");
             }}
           >
-            학교협약회사
+            학교협약업체
           </Flex>
           <Flex
             fontSize={"0.9rem"}
