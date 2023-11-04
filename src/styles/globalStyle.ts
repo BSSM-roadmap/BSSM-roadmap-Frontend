@@ -69,7 +69,6 @@ input::-webkit-search-results-decoration{
   outline: none;
   border: none;
 }
-
 `;
 
 export default GlobalStyle;
