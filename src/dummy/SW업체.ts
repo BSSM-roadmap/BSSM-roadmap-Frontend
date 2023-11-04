@@ -186,7 +186,7 @@ export const SW업체 = [
     X_CNTS: "지도 X좌표",
     Y_DNTS: "지도 Y좌표",
     업무내용:
-      "플랫폼에 따른 UI 개발과 백엔드 시스템 및 백오피스 개발, 다양한 기능 안정적 제공 위한 테스트 코드 작성 및 UI 퍼포먼스 강화",
+      "플랫폼에 따른 UI 개발과 백엔드 시스템 및 백오피스 개발, 다양한 기능",
     필요역량: "",
     DEPARTMENT: "SW",
     C_COUNT: 2,
@@ -196,7 +196,7 @@ export const SW업체 = [
     X_CNTS: "지도 X좌표",
     Y_DNTS: "지도 Y좌표",
     업무내용:
-      "B2B 업무 기능 통합 솔루션 기능 개발, 영상 관련 서비스, AWS, Azure, Vimeo 등 API/SDK 활용한 전자 문서, 사진, 영상 파일 등의 컨텐츠 저장 및 배포 기능 개발",
+      "B2B 업무 기능 통합 솔루션 기능 개발, 영상 관련 서비스, AWS, Azure, Vimeo",
     필요역량: "",
     DEPARTMENT: "SW",
     C_COUNT: 2,

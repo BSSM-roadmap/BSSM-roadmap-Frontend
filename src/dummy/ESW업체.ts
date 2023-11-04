@@ -5,7 +5,7 @@ export const ESW업체 = [
     Y_DNTS: "지도 Y좌표",
     업무내용: "mcas 프로젝트의 개발 및 업데이트",
     필요역량:
-      "Fontend: React/ MobX/ Material-UI/ React-Native/ Typescript, Backend: Node.js/ Typescript/ (postgresql, mysql) DB/ AWS/ ",
+      "Fontend: React/ MobX/ React-Native/ Typescript, Backend: Node.js/ DB",
     DEPARTMENT: "ESW",
     C_COUNT: 1,
   },
@@ -13,8 +13,7 @@ export const ESW업체 = [
     C_NAME: "㈜시지온",
     X_CNTS: "지도 X좌표",
     Y_DNTS: "지도 Y좌표",
-    업무내용:
-      "Frontend: HTML, CSS, Javascript와 모던 웹 프론트 앤드(React, Angular, Vue 등)",
+    업무내용: "Frontend: HTML, CSS, Javascript와 모던 웹 프론트 앤드",
     필요역량:
       "2.Backend: 해당()내용에 대한 이해(Node JS/ REST API/ 웹 서비스(http 등))",
     DEPARTMENT: "ESW",
@@ -88,7 +87,7 @@ export const ESW업체 = [
     X_CNTS: "지도 X좌표",
     Y_DNTS: "지도 Y좌표",
     업무내용:
-      "Backend: 데이터이동 파이프, 자동화시스템 관리, Error시 디버깅, Fontend: React Native 역량 중요(★)",
+      "Backend: 데이터이동 파이프, Error시 디버깅, Fontend: React Native 역량(★)",
     필요역량: "",
     DEPARTMENT: "ESW",
     C_COUNT: 1,
@@ -108,7 +107,7 @@ export const ESW업체 = [
     Y_DNTS: "지도 Y좌표",
     업무내용: "수출전자상거래 솔루션 개발",
     필요역량:
-      "수출전자상거래 솔루션 개발Fontend: 텐센트 미니프로그램 개발(HTML, CSS, JS), Backend: node, python 등 중 1가지에 숙달",
+      "Fontend: HTML, CSS, JS, Backend: node, python 등 중 1가지에 숙달",
     DEPARTMENT: "ESW",
     C_COUNT: 1,
   },
