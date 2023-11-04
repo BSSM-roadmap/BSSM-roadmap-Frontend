@@ -1,40 +1,387 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+부산소프트웨어 마이스터고등학교에 입학한 1학년들을 위한 개발공부 커리큘럼에 대해 알려주고 학교 협약 회사를 보여주는 웹사이트
 
-## Getting Started
-
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+* 학교 홈페이지에 나와있는 학과별 협약회사 리스트와 위치를 JSON 형식으로 표현하였습니다. [직접 한것이므로 완벽한 위치가 아닐 수 있습니다.] (3시간 동안 직접 한땀한땀 조사하였으니 혹시 필요하신 분은 사용해주세요.)
 ```
+export const 업체 = [
+  {
+    C_NAME: "㈜BNK시스템",
+    X_CNTS: 35.174,
+    Y_DNTS: 129,
+    DEPARTMENT: "SW",
+    C_COUNT: 1,
+  },
+  {
+    C_NAME: "㈜마이다스아이티",
+    X_CNTS: 37.398,
+    Y_DNTS: 127.103,
+    DEPARTMENT: "SW",
+    C_COUNT: 2,
+  },
+  {
+    C_NAME: "㈜잉카인터넷",
+    X_CNTS: 37.359,
+    Y_DNTS: 127.104,
+    DEPARTMENT: "SW",
+    C_COUNT: 2,
+  },
+  {
+    C_NAME: "㈜아트랩소프트",
+    X_CNTS: 37.477,
+    Y_DNTS: 126.886,
+    DEPARTMENT: "SW",
+    C_COUNT: 1,
+  },
+  {
+    C_NAME: "㈜엑셈",
+    X_CNTS: 37.564,
+    Y_DNTS: 126.838,
+    DEPARTMENT: "SW",
+    C_COUNT: 1,
+  },
+  {
+    C_NAME: "㈜토즈",
+    X_CNTS: 36.42925,
+    Y_DNTS: 127.39,
+    DEPARTMENT: "SW",
+    C_COUNT: 5,
+  },
+  {
+    C_NAME: "다운정보통신㈜",
+    X_CNTS: 35.174,
+    Y_DNTS: 129.126,
+    DEPARTMENT: "SW",
+    C_COUNT: 1,
+  },
+  {
+    C_NAME: "㈜드림아이티",
+    X_CNTS: 35.175,
+    Y_DNTS: 129.128,
+    DEPARTMENT: "SW",
+    C_COUNT: 1,
+  },
+  {
+    C_NAME: "㈜블루솜",
+    X_CNTS: 35.1348,
+    Y_DNTS: 129.1006,
+    DEPARTMENT: "SW",
+    C_COUNT: 1,
+  },
+  {
+    C_NAME: "㈜리나소프트",
+    X_CNTS: 35.154,
+    Y_DNTS: 128.986,
+    DEPARTMENT: "SW",
+    C_COUNT: 1,
+  },
+  {
+    C_NAME: "㈜에버스톤",
+    X_CNTS: 37.412,
+    Y_DNTS: 127.204,
+    DEPARTMENT: "SW",
+    C_COUNT: 1,
+  },
+  {
+    C_NAME: "㈜오픈놀",
+    X_CNTS: 37.532,
+    Y_DNTS: 126.9057,
+    DEPARTMENT: "SW",
+    C_COUNT: 3,
+  },
+  {
+    C_NAME: "㈜더재무컨설팅",
+    X_CNTS: 35.173083,
+    Y_DNTS: 129.1302729,
+    DEPARTMENT: "SW",
+    C_COUNT: 1,
+  },
+  {
+    C_NAME: "㈜에이블리스",
+    X_CNTS: 37.50214060998,
+    Y_DNTS: 127.0251235,
+    DEPARTMENT: "SW",
+    C_COUNT: 2,
+  },
+  {
+    C_NAME: "㈜비트시스",
+    X_CNTS: 35.175131,
+    Y_DNTS: 129.12451,
+    DEPARTMENT: "SW",
+    C_COUNT: 2,
+  },
+  ,
+  {
+    C_NAME: "㈜큐티티",
+    X_CNTS: 35.17459,
+    Y_DNTS: 129.12693,
+    DEPARTMENT: "SW",
+    C_COUNT: 5,
+  },
+  {
+    C_NAME: "㈜토탈소프트뱅크",
+    X_CNTS: 35.22352174,
+    Y_DNTS: 129.119423,
+    DEPARTMENT: "SW",
+    C_COUNT: 3,
+  },
+  {
+    C_NAME: "㈜리커시브소프트",
+    X_CNTS: 35.175285228,
+    Y_DNTS: 129.12651,
+    DEPARTMENT: "SW",
+    C_COUNT: 2,
+  },
+  {
+    C_NAME: "㈜이씨스",
+    X_CNTS: 35.1182052,
+    Y_DNTS: 129.0417103,
+    DEPARTMENT: "SW",
+    C_COUNT: 1,
+  },
+  {
+    C_NAME: "㈜유피체인",
+    X_CNTS: 35.18263943,
+    Y_DNTS: 129.07820676,
+    DEPARTMENT: "SW",
+    C_COUNT: 1,
+  },
+  {
+    C_NAME: "㈜어니언팜",
+    X_CNTS: 35.19095,
+    Y_DNTS: 128.9847,
+    DEPARTMENT: "SW",
+    C_COUNT: 2,
+  },
+  {
+    C_NAME: "㈜파운더",
+    X_CNTS: 35.172739143371,
+    Y_DNTS: 129.12563804817,
+    DEPARTMENT: "SW",
+    C_COUNT: 2,
+  },
+  {
+    C_NAME: "㈜아우름플래닛",
+    X_CNTS: 37.55512,
+    Y_DNTS: 126.922,
+    DEPARTMENT: "SW",
+    C_COUNT: 2,
+  },
+  {
+    C_NAME: "㈜라플라스테크놀로지스",
+    X_CNTS: 37.358855105515,
+    Y_DNTS: 127.105207,
+    DEPARTMENT: "SW",
+    C_COUNT: 1,
+  },
+  {
+    C_NAME: "㈜아데나소프트웨어",
+    X_CNTS: 37.501688,
+    Y_DNTS: 127.03869,
+    DEPARTMENT: "SW",
+    C_COUNT: 1,
+  },
+  {
+    C_NAME: "㈜와이즈넛",
+    X_CNTS: 37.400286535,
+    Y_DNTS: 127.112453,
+    DEPARTMENT: "SW",
+    C_COUNT: 1,
+  },
+  {
+    C_NAME: "브레인즈컴퍼니㈜",
+    X_CNTS: 37.5427,
+    Y_DNTS: 127.0561,
+    DEPARTMENT: "SW",
+    C_COUNT: 1,
+  },
+  {
+    C_NAME: "㈜셀디코리아",
+    X_CNTS: 37.55889026953,
+    Y_DNTS: 126.830288,
+    DEPARTMENT: "SW",
+    C_COUNT: 1,
+  },
+  {
+    C_NAME: "㈜럭스로보",
+    X_CNTS: 37.49087456,
+    Y_DNTS: 127.0302704,
+    DEPARTMENT: "SW",
+    C_COUNT: 1,
+  },
+  {
+    C_NAME: "㈜한컴위드",
+    X_CNTS: 37.400602,
+    Y_DNTS: 127.1122963,
+    DEPARTMENT: "SW",
+    C_COUNT: 1,
+  },
+  {
+    C_NAME: "㈜에덴룩스",
+    X_CNTS: 37.4781644666,
+    Y_DNTS: 126.881607037,
+    DEPARTMENT: "SW",
+    C_COUNT: 1,
+  },
+  {
+    C_NAME: "매직큐브",
+    X_CNTS: 35.17532237,
+    Y_DNTS: 129.1263254180268,
+    DEPARTMENT: "SW",
+    C_COUNT: 1,
+  },
+  {
+    C_NAME: "㈜피엘지",
+    X_CNTS: 35.21170715635921,
+    Y_DNTS: 129.025660145135,
+    DEPARTMENT: "SW",
+    C_COUNT: 1,
+  },
+  {
+    C_NAME: "㈜리얼메이커",
+    X_CNTS: 35.1730553,
+    Y_DNTS: 129.12764646,
+    DEPARTMENT: "SW",
+    C_COUNT: 1,
+  },
+  {
+    C_NAME: "㈜팩앤롤",
+    X_CNTS: 35.135525892,
+    Y_DNTS: 129.0739257492,
+    DEPARTMENT: "SW",
+    C_COUNT: 1,
+  },
+  {
+    C_NAME: "㈜인터버드",
+    X_CNTS: 35.08851964,
+    Y_DNTS: 129.038955,
+    DEPARTMENT: "SW",
+    C_COUNT: 1,
+  },
+  {
+    C_NAME: "더웰",
+    X_CNTS: 37.39298476,
+    Y_DNTS: 126.9737977291,
+    DEPARTMENT: "SW",
+    C_COUNT: 1,
+  },
+  {
+    C_NAME: "㈜팜코브",
+    X_CNTS: 35.176141,
+    Y_DNTS: 129.125888,
+    DEPARTMENT: "SW",
+    C_COUNT: 1,
+  },
+  {
+    C_NAME: "㈜무스마",
+    X_CNTS: 35.171981,
+    Y_DNTS: 129.109984,
+    DEPARTMENT: "ESW",
+    C_COUNT: 1,
+  },
+  {
+    C_NAME: "㈜시지온",
+    X_CNTS: 37.5669354,
+    Y_DNTS: 126.9841,
+    DEPARTMENT: "ESW",
+    C_COUNT: 1,
+  },
+  {
+    C_NAME: "굿써클",
+    X_CNTS: 35.167204,
+    Y_DNTS: 129.1320262,
+    DEPARTMENT: "ESW",
+    C_COUNT: 1,
+  },
+  {
+    C_NAME: "베스트에프에이㈜",
+    X_CNTS: 35.21004348,
+    Y_DNTS: 128.651522693,
+    DEPARTMENT: "ESW",
+    C_COUNT: 1,
+  },
+  {
+    C_NAME: "㈜경성테크놀러지",
+    X_CNTS: 35.176119996,
+    Y_DNTS: 129.125934621,
+    DEPARTMENT: "ESW",
+    C_COUNT: 1,
+  },
+  {
+    C_NAME: "㈜기원솔루텍",
+    X_CNTS: 35.1389678,
+    Y_DNTS: 128.822198,
+    DEPARTMENT: "ESW",
+    C_COUNT: 2,
+  },
+  {
+    C_NAME: "㈜바질컴퍼니",
+    X_CNTS: 35.1907,
+    Y_DNTS: 128.984202,
+    DEPARTMENT: "ESW",
+    C_COUNT: 1,
+  },
+  {
+    C_NAME: "㈜사운드리더",
+    X_CNTS: 35.176201688,
+    Y_DNTS: 129.125901079362,
+    DEPARTMENT: "ESW",
+    C_COUNT: 1,
+  },
+  {
+    C_NAME: "㈜니더",
+    X_CNTS: 35.175116582,
+    Y_DNTS: 129.1248301736,
+    DEPARTMENT: "ESW",
+    C_COUNT: 1,
+  },
+  {
+    C_NAME: "㈜AIS",
+    X_CNTS: 37.520104964,
+    Y_DNTS: 127.056166884,
+    DEPARTMENT: "ESW",
+    C_COUNT: 1,
+  },
+  {
+    C_NAME: "㈜에코마린",
+    X_CNTS: 35.1729661,
+    Y_DNTS: 129.129773266,
+    DEPARTMENT: "ESW",
+    C_COUNT: 1,
+  },
+  {
+    C_NAME: "유이수㈜",
+    X_CNTS: 35.172997,
+    Y_DNTS: 129.12977,
+    DEPARTMENT: "ESW",
+    C_COUNT: 1,
+  },
+  {
+    C_NAME: "㈜테스타",
+    X_CNTS: 37.540051,
+    Y_DNTS: 127.063562,
+    DEPARTMENT: "ESW",
+    C_COUNT: 1,
+  },
+  {
+    C_NAME: "㈜페이타랩",
+    X_CNTS: 35.15426002,
+    Y_DNTS: 129.057341704975,
+    DEPARTMENT: "ESW",
+    C_COUNT: 1,
+  },
+  {
+    C_NAME: "프엠테크놀리지",
+    X_CNTS: 37.5016046,
+    Y_DNTS: 126.87548003333,
+    DEPARTMENT: "ESW",
+    C_COUNT: 1,
+  },
+  {
+    C_NAME: "화진기업㈜",
+    X_CNTS: 35.09082851,
+    Y_DNTS: 128.8441744,
+    DEPARTMENT: "ESW",
+    C_COUNT: 2,
+  },
+];
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+```
