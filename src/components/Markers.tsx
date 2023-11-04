@@ -1,15 +1,16 @@
 import { 학과데이터 } from "@/interface/학과인터페이스";
-import React, { useEffect } from "react";
+import React, { Dispatch, SetStateAction, useEffect } from "react";
 
 interface MarkerProps {
   map: any;
   companyDatas: any[];
+  setCurrentCompany: Dispatch<SetStateAction<any>>;
 }
 
-const Markers = ({ map, companyDatas }: MarkerProps) => {
+const Markers = ({ map, companyDatas, setCurrentCompany }: MarkerProps) => {
   useEffect(() => {
     if (map) {
-      companyDatas.map((store) => {
+      companyDatas.map((company) => {
         var imageSrc = "/images/markers/office-building.png", // 마커이미지의 주소입니다
           imageSize = new window.kakao.maps.Size(40, 40), // 마커이미지의 크기입니다
           imageOption = { offset: new window.kakao.maps.Point(27, 69) };
@@ -21,8 +22,8 @@ const Markers = ({ map, companyDatas }: MarkerProps) => {
         );
 
         var markerPosition = new window.kakao.maps.LatLng(
-          store?.X_CNTS, // 위도
-          store?.Y_DNTS // 경도
+          company?.X_CNTS, // 위도
+          company?.Y_DNTS // 경도
         );
 
         // 마커 생성
@@ -35,7 +36,7 @@ const Markers = ({ map, companyDatas }: MarkerProps) => {
         marker.setMap(map);
 
         // 마커 커서 오버시 마커 위에 표시할 인포윈도우
-        var content = `<div style="background-color: darkblue; color: #ffffff; display: block; font-size: 0.875rem; text-align: center; height: 1.5rem; padding-left: 0.5rem; padding-right: 0.5rem; line-height: 1.5rem; border-radius: 5px;">${store?.C_NAME}</div>`;
+        var content = `<div style="background-color: darkblue; color: #ffffff; display: block; font-size: 0.875rem; text-align: center; height: 1.5rem; padding-left: 0.5rem; padding-right: 0.5rem; line-height: 1.5rem; border-radius: 5px;">${company?.C_NAME}</div>`;
 
         var customOverlay = new window.kakao.maps.CustomOverlay({
           position: markerPosition,
@@ -55,9 +56,14 @@ const Markers = ({ map, companyDatas }: MarkerProps) => {
           // 마커에 마우스아웃 이벤트가 발생하면 인포윈도우를 제거합니다
           customOverlay.setMap(null);
         });
+
+        window.kakao.maps.event.addListener(marker, "click", function () {
+          setCurrentCompany(company);
+          console.log(company);
+        });
       });
     }
-  }, [map, companyDatas]);
+  }, [map, companyDatas, setCurrentCompany]);
 
   return <div></div>;
 };
