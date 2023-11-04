@@ -23,23 +23,18 @@ const LoadKakaoMap = () => {
       };
       const map = new window.kakao.maps.Map(mapContainer, mapOption);
 
-      // 회사정보 마커 띄우기
       업체.map((store) => {
-        var markerPosition = new window.kakao.maps.LatLng(
-          store?.Y_DNTS,
-          store?.X_CNTS
-        );
+        var imageSrc = "/images/markers/office-building.png", // 마커이미지의 주소입니다
+          imageSize = new window.kakao.maps.Size(40, 40), // 마커이미지의 크기입니다
+          imageOption = { offset: new window.kakao.maps.Point(27, 69) };
 
-        // 마커 생성
-        var marker = new window.kakao.maps.Marker({
-          position: markerPosition,
-        });
+        var markerImage = new window.kakao.maps.MarkerImage(
+            imageSrc,
+            imageSize,
+            imageOption
+          ),
+          markerPosition = new window.kakao.maps.LatLng(37.54699, 127.09598); // 마커가 표시될 위치입니다
 
-        console.log("markerPosition", marker);
-        marker.setMap(map);
-      });
-
-      업체.map((store) => {
         var markerPosition = new window.kakao.maps.LatLng(
           store?.X_CNTS, // 위도
           store?.Y_DNTS // 경도
@@ -48,6 +43,7 @@ const LoadKakaoMap = () => {
         // 마커 생성
         var marker = new window.kakao.maps.Marker({
           position: markerPosition,
+          image: markerImage,
         });
 
         console.log("markerPosition", marker);
