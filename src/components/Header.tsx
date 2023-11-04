@@ -52,7 +52,7 @@ const Header = () => {
               router.push("/map");
             }}
           >
-            협약회사위치
+            협약업체위치
           </Flex>
           <Flex
             fontSize={"0.9rem"}
@@ -67,10 +67,10 @@ const Header = () => {
             fontSize={"0.9rem"}
             cursor={"pointer"}
             onClick={() => {
-              router.push("/createRoadMap");
+              router.push("/myPage");
             }}
           >
-            로드맵작성
+            나의페이지
           </Flex>
         </Box>
       </Box>
