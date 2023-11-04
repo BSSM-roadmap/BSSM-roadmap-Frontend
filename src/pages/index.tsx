@@ -1,6 +1,5 @@
 import { Box, Button, Flex, Text } from "@chakra-ui/react";
 import Image from "next/image";
-import RoadMapImage from "@/assets/roadmap.svg";
 import styled from "styled-components";
 import { useRouter } from "next/router";
 
@@ -35,7 +34,7 @@ export default function Home() {
       <Box w={"40%"} h={"100%"} display={"flex"} alignItems={"flex-end"}>
         <Box marginBottom={"3rem"} marginRight={"20px"}>
           <Image
-            src={RoadMapImage}
+            src={"/images/roadmap.svg"}
             width={700}
             height={700}
             alt="Picture of the author"
