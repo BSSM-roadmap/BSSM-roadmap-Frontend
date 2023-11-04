@@ -1,9 +1,10 @@
 /* global kakao */
 import Script from "next/script";
 import React from "react";
+import { 업체 } from "@/dummy/업체";
 
-const DEFAULT_LAT = 35.174;
-const DEFAULT_LNG = 129.128;
+const DEFAULT_LAT = 35.17308711;
+const DEFAULT_LNG = 129.12775978;
 
 declare global {
   interface Window {
@@ -21,6 +22,37 @@ const LoadKakaoMap = () => {
         level: 3,
       };
       const map = new window.kakao.maps.Map(mapContainer, mapOption);
+
+      // 회사정보 마커 띄우기
+      업체.map((store) => {
+        var markerPosition = new window.kakao.maps.LatLng(
+          store?.Y_DNTS,
+          store?.X_CNTS
+        );
+
+        // 마커 생성
+        var marker = new window.kakao.maps.Marker({
+          position: markerPosition,
+        });
+
+        console.log("markerPosition", marker);
+        marker.setMap(map);
+      });
+
+      업체.map((store) => {
+        var markerPosition = new window.kakao.maps.LatLng(
+          store?.X_CNTS, // 위도
+          store?.Y_DNTS // 경도
+        );
+
+        // 마커 생성
+        var marker = new window.kakao.maps.Marker({
+          position: markerPosition,
+        });
+
+        console.log("markerPosition", marker);
+        marker.setMap(map);
+      });
     });
   };
   return (
