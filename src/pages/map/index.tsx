@@ -1,16 +1,8 @@
-/* global kakao */
-import Script from "next/script";
+import LoadKakaoMap from "@/components/LoadKakaoMap";
 import React from "react";
 
-declare global {
-  interface Window {
-    kakao: any;
-  }
-}
-
 const Map = () => {
-  const loadKakaoMap = () => {};
-  return <div id="map" className="w-full h-screen"></div>;
+  return <LoadKakaoMap />;
 };
 
 export default Map;

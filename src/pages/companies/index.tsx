@@ -1,13 +1,7 @@
-import { 학과 } from "@/dummy/학과";
+import Companies from "@/components/Companies";
+import { ESW업체 } from "@/dummy/ESW업체";
+import { SW업체 } from "@/dummy/SW업체";
 import { Box, Flex, Text } from "@chakra-ui/react";
-import styled from "styled-components";
-import Image from "next/image";
-
-interface 학과데이터 {
-  id: number;
-  name: string;
-  imgUrl: string;
-}
 
 export default function RoadMap() {
   return (
@@ -24,24 +18,15 @@ export default function RoadMap() {
           flexDirection={"column"}
           marginBottom={"50px"}
         >
-          {학과.map((data) => (
-            <Box
-              key={data.id}
-              width={"95%"}
-              backgroundColor={"gray.100"}
-              height={"90px"}
-              padding={"10px"}
-              borderRadius={"5px"}
-            >
-              {data.name}
-            </Box>
+          {SW업체.map((data, i) => (
+            <Companies key={i} data={data} i={i} />
           ))}
         </Flex>
       </Box>
       <Box width={"50%"}>
         <Flex width={"100%"} height={"80px"} alignItems={"center"}>
           <Text fontWeight={"600"} fontSize={"1.25rem"}>
-            소프트웨어 개발과
+            임베디드 소프트웨어 개발과
           </Text>
         </Flex>
         <Flex
@@ -50,23 +35,8 @@ export default function RoadMap() {
           flexDirection={"column"}
           marginBottom={"50px"}
         >
-          {학과.map((data: 학과데이터) => (
-            <Box
-              key={data.id}
-              width={"95%"}
-              backgroundColor={"gray.100"}
-              height={"90px"}
-              padding={"10px"}
-              borderRadius={"5px"}
-              display={"flex"}
-            >
-              {/* <Image
-                src={data.imgUrl}
-                alt="Description"
-                width={300}
-                height={10}
-              /> */}
-            </Box>
+          {ESW업체.map((data, i) => (
+            <Companies key={i} data={data} i={i} />
           ))}
         </Flex>
       </Box>
