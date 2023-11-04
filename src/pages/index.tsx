@@ -8,7 +8,7 @@ export default function Home() {
   const router = useRouter();
 
   return (
-    <Flex w={"90%"} h={"100%"} margin={"0 auto"}>
+    <Flex w={"90%"} h={"93vh"} margin={"0 auto"}>
       <Box w={"60%"} display={"flex"} flexDirection={"column"}>
         <Box w={"100%"} h={"50%"} display={"flex"} alignItems={"center"}>
           <Text fontSize={["2xl", "3xl", "4xl", "5xl"]} marginLeft={"20px"}>
