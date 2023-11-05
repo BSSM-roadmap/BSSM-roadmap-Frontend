@@ -27,7 +27,10 @@ const Projects = ({ data }: dataProps) => {
         <Image src="/images/road.png" width={50} height={50} alt="img" />
       </Flex>
       <Box>
-        <Text fontWeight={"semibold"}>{data.title}</Text>
+        <Text fontWeight={"semibold"}>
+          <span style={{ marginRight: "10px" }}>{data.title}</span> (
+          {data.grade}졸업생)
+        </Text>
         <Flex>
           <Flex marginRight={"10px"}>
             <Text fontWeight={"semibold"}>01. </Text>
