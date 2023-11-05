@@ -1,10 +1,13 @@
 import { Box, Flex, Text } from "@chakra-ui/react";
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 import { 로드맵 } from "@/dummy/로드맵";
-import { truncateText } from "@/utils/truncate";
+import { 나의로드맵 } from "@/dummy/나의로드맵";
+import Projects from "@/components/Projects";
 
 const MyPage = () => {
+  const [myRoadMap, setMyRoadMap] = useState(1);
+
   return (
     <Box maxWidth={"800px"} margin={"0 auto"}>
       <Flex
@@ -18,12 +21,18 @@ const MyPage = () => {
       >
         <Flex width={"90%"} height={"100%"} gap={"1rem"} alignItems={"center"}>
           <Image src="/images/user.png" width={80} height={30} alt="img" />
-          <Flex flexDirection={"column"}>
-            <Text fontWeight={"semibold"} fontSize={"1.2rem"}>
-              이상진
-            </Text>
-            <Text>2학년 (2022년 입학생)</Text>
-            <Text>소프트웨어 개발과</Text>
+          <Flex width={"100%"} justifyContent={"space-between"}>
+            <Box width={"30%"}>
+              <Text fontWeight={"semibold"} fontSize={"1.2rem"}>
+                이상진
+              </Text>
+              <Text>2학년 (2022년 입학생)</Text>
+              <Text>소프트웨어 개발과</Text>
+            </Box>
+            <Box flexDirection={"column"} gap={"0.5rem"} marginTop={"26px"}>
+              <Text cursor={"pointer"}>로그아웃</Text>
+              <Text cursor={"pointer"}>로드맵 작성</Text>
+            </Box>
           </Flex>
         </Flex>
       </Flex>
@@ -34,48 +43,47 @@ const MyPage = () => {
           marginTop={"10px"}
           marginBottom={"20px"}
         >
-          <Image
-            src="/images/thumb-tack.png"
-            width={20}
-            height={20}
-            alt="img"
-          />
-          <Text fontWeight={"semibold"}>이상진님이 찜한 로드맵</Text>
+          <Text
+            fontWeight={"semibold"}
+            borderBottom={"1px"}
+            marginRight={"1rem"}
+            color={myRoadMap === 1 ? "darkblue" : "gray.500"}
+            borderBottomColor={myRoadMap === 1 ? "darkblue" : "gray.500"}
+            cursor={"pointer"}
+            transition={"color 0.3s, borderBottomColor 0.3s"}
+            onClick={() => {
+              setMyRoadMap(1);
+            }}
+          >
+            작성한 로드맵
+          </Text>
+          <Text
+            fontWeight={"semibold"}
+            borderBottom={"1px"}
+            color={myRoadMap === 2 ? "darkblue" : "gray.500"}
+            borderBottomColor={myRoadMap === 2 ? "darkblue" : "gray.500"}
+            transition={"color 0.3s, borderBottomColor 0.3s"}
+            cursor={"pointer"}
+            onClick={() => {
+              setMyRoadMap(2);
+            }}
+          >
+            찜한 로드맵
+          </Text>
         </Flex>
-        <Flex flexDirection={"column"} gap={"10px"} marginBottom={"30px"}>
-          {로드맵.map((data) => (
-            <Flex
-              key={data.id}
-              width={"100%"}
-              height={"80px"}
-              padding={"10px"}
-              backgroundColor={"gray.100"}
-              borderRadius={"5px"}
-              alignItems={"center"}
-              gap={"10px"}
-            >
-              <Flex
-                width={"63px"}
-                height={"63px"}
-                backgroundColor={"white"}
-                borderRadius={"5px"}
-                alignItems={"center"}
-                justifyContent={"center"}
-              >
-                <Image
-                  src="/images/road.png"
-                  width={50}
-                  height={50}
-                  alt="img"
-                />
-              </Flex>
-              <Box>
-                <Text fontWeight={"semibold"}>{data.title}</Text>
-                <Text>{truncateText(data.step1, 30)}</Text>
-              </Box>
-            </Flex>
-          ))}
-        </Flex>
+        {myRoadMap === 2 ? (
+          <Flex flexDirection={"column"} gap={"10px"} marginBottom={"30px"}>
+            {로드맵.map((data) => (
+              <Projects key={data.id} data={data} />
+            ))}
+          </Flex>
+        ) : (
+          <Flex flexDirection={"column"} gap={"10px"} marginBottom={"30px"}>
+            {나의로드맵.map((data) => (
+              <Projects key={data.id} data={data} />
+            ))}
+          </Flex>
+        )}
       </Flex>
     </Box>
   );
