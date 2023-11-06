@@ -4,9 +4,11 @@ import React, { useState } from "react";
 import { 로드맵 } from "@/dummy/로드맵";
 import { 나의로드맵 } from "@/dummy/나의로드맵";
 import Projects from "@/components/Projects";
+import { useRouter } from "next/router";
 
 const MyPage = () => {
   const [myRoadMap, setMyRoadMap] = useState(1);
+  const router = useRouter();
 
   return (
     <Box maxWidth={"800px"} margin={"0 auto"}>
@@ -31,7 +33,14 @@ const MyPage = () => {
             </Box>
             <Box flexDirection={"column"} gap={"0.5rem"} marginTop={"26px"}>
               <Text cursor={"pointer"}>로그아웃</Text>
-              <Text cursor={"pointer"}>로드맵 작성</Text>
+              <Text
+                cursor={"pointer"}
+                onClick={() => {
+                  router.push("/createRoadMap");
+                }}
+              >
+                로드맵 작성
+              </Text>
             </Box>
           </Flex>
         </Flex>

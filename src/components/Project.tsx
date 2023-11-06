@@ -32,7 +32,7 @@ const Project = ({ state, number }: any) => {
           borderRadius={"0.3rem"}
           padding={"5px"}
         >
-          <Text fontSize={"1.3rem"}>{state}</Text>
+          <Text fontSize={"1.1rem"}>{state}</Text>
         </Box>
       </Flex>
     </Flex>

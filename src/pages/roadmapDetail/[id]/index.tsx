@@ -25,11 +25,12 @@ const RoadMapDetail = () => {
         marginBottom={"1rem"}
       >
         <Text
-          fontSize={"1.3rem"}
+          fontSize={"1.4rem"}
           fontWeight={"semibold"}
           paddingTop={"2rem"}
           paddingBottom={"0.8rem"}
           margin={"0 auto"}
+          width={"100%"}
         >
           {state.title}
         </Text>
