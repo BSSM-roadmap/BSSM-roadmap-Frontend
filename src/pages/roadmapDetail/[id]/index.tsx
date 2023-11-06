@@ -5,10 +5,12 @@ import React from "react";
 import { useRecoilValue } from "recoil";
 import { BsArrowDownSquareFill } from "react-icons/bs";
 import Image from "next/image";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const RoadMapDetail = () => {
   const state = useRecoilValue(로드맵정보);
-  console.log(state);
+  const notify = () => toast.success("찜하기 완료!");
 
   return (
     <Box
@@ -17,6 +19,16 @@ const RoadMapDetail = () => {
       bgRepeat="no-repeat"
       bgSize="70%"
     >
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       <Flex
         width={"800px"}
         margin={"0 auto"}
@@ -24,16 +36,28 @@ const RoadMapDetail = () => {
         gap={"1rem"}
         marginBottom={"1rem"}
       >
-        <Text
-          fontSize={"1.4rem"}
+        <Flex
+          fontSize={"1.6rem"}
           fontWeight={"semibold"}
-          paddingTop={"2rem"}
+          paddingTop={"1.5rem"}
           paddingBottom={"0.8rem"}
           margin={"0 auto"}
           width={"100%"}
+          justifyContent={"space-between"}
+          alignItems={"center"}
         >
           {state.title}
-        </Text>
+          <Flex
+            cursor={"pointer"}
+            alignItems={"center"}
+            gap={"0.5rem"}
+            flexDirection={"column"}
+            onClick={notify}
+          >
+            <Image src="/images/folder.png" width={40} height={30} alt="img" />
+            <Text fontSize={"0.8rem"}>로드맵 저장하기</Text>
+          </Flex>
+        </Flex>
         <Project state={state.step1} number={"01"} />
         <Text margin={"0 auto"}>
           <BsArrowDownSquareFill />
