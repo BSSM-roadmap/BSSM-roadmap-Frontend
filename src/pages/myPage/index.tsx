@@ -33,14 +33,21 @@ const MyPage = () => {
             </Box>
             <Box flexDirection={"column"} gap={"0.5rem"} marginTop={"26px"}>
               <Text cursor={"pointer"}>로그아웃</Text>
-              <Text
+              <Flex
                 cursor={"pointer"}
+                gap={"0.3rem"}
                 onClick={() => {
                   router.push("/createRoadMap");
                 }}
               >
                 로드맵 작성
-              </Text>
+                <Image
+                  src="/images/writing.png"
+                  width={20}
+                  height={10}
+                  alt="img"
+                />
+              </Flex>
             </Box>
           </Flex>
         </Flex>
