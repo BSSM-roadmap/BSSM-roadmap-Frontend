@@ -1,4 +1,4 @@
-import LoadKakaoMap from "@/components/LoadKakaoMap";
+import LoadKakaoMap from "@/components/RoadKakaoMap";
 import Markers from "@/components/Markers";
 import React, { useState } from "react";
 import { 업체 } from "@/dummy/업체";

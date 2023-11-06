@@ -7,13 +7,14 @@ const Header = () => {
   return (
     <>
       <Box
-        h={"7vh"}
+        h={"55px"}
         display={"flex"}
         justifyContent={"space-between"}
         alignItems={"center"}
         borderBottom={"1px"}
         borderBottomColor={"gray.200"}
         boxShadow={"base"}
+        width={"100%"}
       >
         <Box
           paddingLeft={"20px"}

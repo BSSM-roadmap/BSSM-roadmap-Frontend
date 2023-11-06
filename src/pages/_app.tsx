@@ -1,8 +1,9 @@
 import Header from "@/components/Header";
 import "@/styles/globalStyle";
-import { Box, ChakraProvider, extendTheme } from "@chakra-ui/react";
+import { ChakraProvider } from "@chakra-ui/react";
 import type { AppProps } from "next/app";
 import { Rubik } from "next/font/google";
+import { RecoilRoot } from "recoil";
 
 const rubik = Rubik({ subsets: ["latin"] });
 
@@ -15,10 +16,12 @@ const App = ({ Component, pageProps }: AppProps) => {
     `}
   </style>;
   return (
-    <ChakraProvider>
-      <Header />
-      <Component {...pageProps} />
-    </ChakraProvider>
+    <RecoilRoot>
+      <ChakraProvider>
+        <Header />
+        <Component {...pageProps} />
+      </ChakraProvider>
+    </RecoilRoot>
   );
 };
 
