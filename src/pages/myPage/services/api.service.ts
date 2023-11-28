@@ -13,3 +13,8 @@ export const getUser = async () => {
     }
   }
 };
+
+export const getUserRoadMap = async (userId: number) => {
+  const { data } = await instance.get(`/user/${userId}/roadmap`);
+  return data;
+};

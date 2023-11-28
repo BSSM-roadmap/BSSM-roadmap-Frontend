@@ -1,7 +1,8 @@
-import { useQueryClient } from "react-query";
 import { useRouter, useSearchParams } from "next/navigation";
 import React from "react";
 import { useLoginMutation } from "./services/mutation.service";
+import { TOKEN } from "@/storage/constants";
+import Storage from "@/storage";
 
 const useOAuth = () => {
   const router = useRouter();
@@ -18,7 +19,7 @@ const useOAuth = () => {
 
   React.useEffect(() => {
     if (isSuccess) {
-      const redirectUrl = window?.localStorage.getItem("TOKEN:ACCESS") || "/";
+      const redirectUrl = Storage.getItem(TOKEN.ACCESS) || "/";
       router.push("/");
     }
   }, [isSuccess, router]);

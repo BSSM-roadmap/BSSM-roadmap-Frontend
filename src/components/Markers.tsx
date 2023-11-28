@@ -32,7 +32,6 @@ const Markers = ({ map, companyDatas, setCurrentCompany }: MarkerProps) => {
           image: markerImage,
         });
 
-        console.log("markerPosition", marker);
         marker.setMap(map);
 
         // 마커 커서 오버시 마커 위에 표시할 인포윈도우
@@ -59,7 +58,6 @@ const Markers = ({ map, companyDatas, setCurrentCompany }: MarkerProps) => {
 
         window.kakao.maps.event.addListener(marker, "click", function () {
           setCurrentCompany(company);
-          console.log(company);
         });
       });
     }

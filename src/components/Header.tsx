@@ -2,21 +2,11 @@ import React, { useEffect, useState } from "react";
 import { Box, Flex } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import { TOKEN } from "@/storage/constants";
+import Storage from "@/storage";
 
 const Header = () => {
   const router = useRouter();
-
-  const [isClient, setIsClient] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  useEffect(() => {
-    setIsClient(typeof window !== "undefined");
-    setIsLoggedIn(!!window.localStorage.getItem("TOKEN:ACCESS"));
-  }, []);
-
-  if (!isClient) {
-    return null;
-  }
 
   return (
     <>
@@ -78,7 +68,7 @@ const Header = () => {
           >
             학교협약업체
           </Flex>
-          {isLoggedIn ? (
+          {Storage.getItem(TOKEN.ACCESS) ? (
             <Flex
               fontSize={"0.9rem"}
               cursor={"pointer"}

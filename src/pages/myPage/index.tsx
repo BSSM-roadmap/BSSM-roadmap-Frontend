@@ -5,19 +5,21 @@ import { 로드맵 } from "@/dummy/로드맵";
 import { 나의로드맵 } from "@/dummy/나의로드맵";
 import Projects from "@/components/Projects";
 import { useRouter } from "next/router";
-import { useInfoQuery } from "./services/mutation.service";
+import { useInfoQuery, useRoadMap } from "./services/mutation.service";
 import { 유저데이터 } from "@/interface/유저인터페이스";
+import { refresh } from "@/apis/token";
 
 const MyPage = () => {
   const [myRoadMap, setMyRoadMap] = useState(1);
   const router = useRouter();
   const [user, setUser] = useState<유저데이터>();
 
-  const infoQuery = useInfoQuery();
+  const userInfoQuery = useInfoQuery();
+  const userRoadMap = useRoadMap(Number(user?.userId));
 
   useEffect(() => {
-    setUser(infoQuery);
-  }, [infoQuery]);
+    setUser(userInfoQuery);
+  }, [userInfoQuery]);
 
   return (
     <Box maxWidth={"800px"} margin={"0 auto"}>
@@ -48,7 +50,14 @@ const MyPage = () => {
               </Text>
             </Box>
             <Box flexDirection={"column"} gap={"0.5rem"} marginTop={"26px"}>
-              <Text cursor={"pointer"}>로그아웃</Text>
+              <Text
+                cursor={"pointer"}
+                onClick={() => {
+                  window?.localStorage.clear();
+                }}
+              >
+                로그아웃
+              </Text>
               <Flex
                 cursor={"pointer"}
                 gap={"0.3rem"}
