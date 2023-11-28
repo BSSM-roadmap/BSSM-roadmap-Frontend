@@ -1,14 +1,23 @@
 import { Box, Flex, Text } from "@chakra-ui/react";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { 로드맵 } from "@/dummy/로드맵";
 import { 나의로드맵 } from "@/dummy/나의로드맵";
 import Projects from "@/components/Projects";
 import { useRouter } from "next/router";
+import { useInfoQuery } from "./services/mutation.service";
+import { 유저데이터 } from "@/interface/유저인터페이스";
 
 const MyPage = () => {
   const [myRoadMap, setMyRoadMap] = useState(1);
   const router = useRouter();
+  const [user, setUser] = useState<유저데이터>();
+
+  const infoQuery = useInfoQuery();
+
+  useEffect(() => {
+    setUser(infoQuery);
+  }, [infoQuery]);
 
   return (
     <Box maxWidth={"800px"} margin={"0 auto"}>
@@ -26,10 +35,17 @@ const MyPage = () => {
           <Flex width={"100%"} justifyContent={"space-between"}>
             <Box width={"30%"}>
               <Text fontWeight={"semibold"} fontSize={"1.2rem"}>
-                이상진
+                {user?.name}
               </Text>
-              <Text>2학년 (2022년 입학생)</Text>
-              <Text>소프트웨어 개발과</Text>
+              <Text>
+                {user?.grade}학년 / {user?.enrolledAt}년 입학생
+              </Text>
+              <Text>
+                {(Number(user?.grade) >= 2 && user?.classNo == 1) ||
+                user?.classNo == 2
+                  ? "소프트웨어 개발과"
+                  : "임베디드 개발과"}
+              </Text>
             </Box>
             <Box flexDirection={"column"} gap={"0.5rem"} marginTop={"26px"}>
               <Text cursor={"pointer"}>로그아웃</Text>

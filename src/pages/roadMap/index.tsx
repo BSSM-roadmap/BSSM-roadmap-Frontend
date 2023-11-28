@@ -1,19 +1,9 @@
-import instance from "@/apis/httpClient";
 import Projects from "@/components/Projects";
 import { 로드맵 } from "@/dummy/로드맵";
-import { TOKEN } from "@/storage/constants";
 import { Box, Flex } from "@chakra-ui/react";
 import React from "react";
 
 const RoadMap = () => {
-  if (typeof window !== "undefined") {
-    instance.get("/user", {
-      headers: {
-        Authorization: window.localStorage.getItem("TOKEN:ACCESS"),
-      },
-    });
-  }
-
   return (
     <Box maxWidth={"800px"} margin={"0 auto"}>
       <Box
