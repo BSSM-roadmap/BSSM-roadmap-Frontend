@@ -16,7 +16,7 @@ const Header = () => {
   }, []);
 
   const renderContent = () => {
-    if (Storage.getItem(TOKEN.ACCESS)) {
+    if (isClient && Storage.getItem(TOKEN.ACCESS)) {
       return (
         <Box
           fontSize={"0.9rem"}
