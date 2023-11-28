@@ -5,9 +5,12 @@ import { 로드맵 } from "@/dummy/로드맵";
 import { 나의로드맵 } from "@/dummy/나의로드맵";
 import Projects from "@/components/Projects";
 import { useRouter } from "next/router";
-import { useInfoQuery, useRoadMap } from "./services/mutation.service";
+import {
+  useAddRoadMap,
+  useInfoQuery,
+  useRoadMap,
+} from "./services/mutation.service";
 import { 유저데이터 } from "@/interface/유저인터페이스";
-import { refresh } from "@/apis/token";
 
 const MyPage = () => {
   const [myRoadMap, setMyRoadMap] = useState(1);
@@ -16,6 +19,7 @@ const MyPage = () => {
 
   const userInfoQuery = useInfoQuery();
   const userRoadMap = useRoadMap(Number(user?.userId));
+  const userAddRoadMap = useAddRoadMap(Number(user?.userId));
 
   useEffect(() => {
     setUser(userInfoQuery);
@@ -108,15 +112,39 @@ const MyPage = () => {
         </Flex>
         {myRoadMap === 2 ? (
           <Flex flexDirection={"column"} gap={"10px"} marginBottom={"30px"}>
-            {로드맵.map((data) => (
-              <Projects key={data.id} data={data} />
-            ))}
+            {userAddRoadMap?.length > 1 ? (
+              userAddRoadMap.map((data: any) => (
+                <Projects key={data.id} data={data} />
+              ))
+            ) : (
+              <Box
+                width={"100%"}
+                height={"25rem"}
+                display={"flex"}
+                alignItems={"center"}
+                justifyContent={"center"}
+              >
+                <Text fontSize={"1.2rem"}>찜한 로드맵 없음</Text>
+              </Box>
+            )}
           </Flex>
         ) : (
           <Flex flexDirection={"column"} gap={"10px"} marginBottom={"30px"}>
-            {나의로드맵.map((data) => (
-              <Projects key={data.id} data={data} />
-            ))}
+            {userRoadMap?.length > 1 ? (
+              userRoadMap.map((data: any) => (
+                <Projects key={data.id} data={data} />
+              ))
+            ) : (
+              <Box
+                width={"100%"}
+                height={"25rem"}
+                display={"flex"}
+                alignItems={"center"}
+                justifyContent={"center"}
+              >
+                <Text fontSize={"1.2rem"}>작성한 로드맵 없음</Text>
+              </Box>
+            )}
           </Flex>
         )}
       </Flex>

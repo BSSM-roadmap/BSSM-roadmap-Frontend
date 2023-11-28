@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from "react";
+// ... (import statements)
+
+import { useEffect, useState } from "react";
 import { Box, Flex } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import Link from "next/link";
@@ -7,6 +9,35 @@ import Storage from "@/storage";
 
 const Header = () => {
   const router = useRouter();
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  const renderContent = () => {
+    if (Storage.getItem(TOKEN.ACCESS)) {
+      return (
+        <Box
+          fontSize={"0.9rem"}
+          cursor={"pointer"}
+          onClick={() => {
+            router.push("/myPage");
+          }}
+        >
+          나의페이지
+        </Box>
+      );
+    } else {
+      return (
+        <Link href={process.env.NEXT_PUBLIC_REDIRECT_URL as string} passHref>
+          <Box fontSize={"0.9rem"} cursor={"pointer"}>
+            로그인
+          </Box>
+        </Link>
+      );
+    }
+  };
 
   return (
     <>
@@ -68,23 +99,7 @@ const Header = () => {
           >
             학교협약업체
           </Flex>
-          {Storage.getItem(TOKEN.ACCESS) ? (
-            <Flex
-              fontSize={"0.9rem"}
-              cursor={"pointer"}
-              onClick={() => {
-                router.push("/myPage");
-              }}
-            >
-              나의페이지
-            </Flex>
-          ) : (
-            <Flex fontSize={"0.9rem"} cursor={"pointer"}>
-              <Link href={process.env.NEXT_PUBLIC_REDIRECT_URL as string}>
-                로그인
-              </Link>
-            </Flex>
-          )}
+          {renderContent()}
         </Box>
       </Box>
     </>
