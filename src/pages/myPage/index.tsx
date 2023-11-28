@@ -25,6 +25,11 @@ const MyPage = () => {
     setUser(userInfoQuery);
   }, [userInfoQuery]);
 
+  const handleLogout = () => {
+    window.localStorage.clear();
+    router.push("/", undefined, { shallow: true });
+  };
+
   return (
     <Box maxWidth={"800px"} margin={"0 auto"}>
       <Flex
@@ -54,12 +59,7 @@ const MyPage = () => {
               </Text>
             </Box>
             <Box flexDirection={"column"} gap={"0.5rem"} marginTop={"26px"}>
-              <Text
-                cursor={"pointer"}
-                onClick={() => {
-                  window?.localStorage.clear();
-                }}
-              >
+              <Text cursor={"pointer"} onClick={handleLogout}>
                 로그아웃
               </Text>
               <Flex
