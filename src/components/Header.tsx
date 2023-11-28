@@ -1,9 +1,23 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Flex } from "@chakra-ui/react";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 const Header = () => {
   const router = useRouter();
+
+  const [isClient, setIsClient] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    setIsClient(typeof window !== "undefined");
+    setIsLoggedIn(!!window.localStorage.getItem("TOKEN:ACCESS"));
+  }, []);
+
+  if (!isClient) {
+    return null;
+  }
+
   return (
     <>
       <Box
@@ -64,15 +78,23 @@ const Header = () => {
           >
             학교협약업체
           </Flex>
-          <Flex
-            fontSize={"0.9rem"}
-            cursor={"pointer"}
-            onClick={() => {
-              router.push("/myPage");
-            }}
-          >
-            나의페이지
-          </Flex>
+          {isLoggedIn ? (
+            <Flex
+              fontSize={"0.9rem"}
+              cursor={"pointer"}
+              onClick={() => {
+                router.push("/myPage");
+              }}
+            >
+              나의페이지
+            </Flex>
+          ) : (
+            <Flex fontSize={"0.9rem"} cursor={"pointer"}>
+              <Link href={process.env.NEXT_PUBLIC_REDIRECT_URL as string}>
+                로그인
+              </Link>
+            </Flex>
+          )}
         </Box>
       </Box>
     </>

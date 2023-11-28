@@ -15,7 +15,6 @@ const CreateRoadMap = () => {
       >
         <Flex fontSize={"1.4rem"} fontWeight={"semibold"} gap={"0.3rem"}>
           로드맵 작성하기
-          <Image src="/images/writing.png" width={30} height={20} alt="img" />
         </Flex>
         자신만의 공부비법을 작성해 주세요!
       </Flex>

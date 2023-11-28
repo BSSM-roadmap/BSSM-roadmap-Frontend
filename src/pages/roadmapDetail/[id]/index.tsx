@@ -13,12 +13,7 @@ const RoadMapDetail = () => {
   const notify = () => toast.success("찜하기 완료!");
 
   return (
-    <Box
-      bgImage="url('/images/roadMap.png')"
-      bgPosition="center"
-      bgRepeat="no-repeat"
-      bgSize="70%"
-    >
+    <Box>
       <ToastContainer
         position="top-right"
         autoClose={3000}
@@ -54,7 +49,6 @@ const RoadMapDetail = () => {
             flexDirection={"column"}
             onClick={notify}
           >
-            <Image src="/images/folder.png" width={40} height={30} alt="img" />
             <Text fontSize={"0.8rem"}>로드맵 저장하기</Text>
           </Flex>
         </Flex>

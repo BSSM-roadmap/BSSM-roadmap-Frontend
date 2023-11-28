@@ -41,12 +41,6 @@ const MyPage = () => {
                 }}
               >
                 로드맵 작성
-                <Image
-                  src="/images/writing.png"
-                  width={20}
-                  height={10}
-                  alt="img"
-                />
               </Flex>
             </Box>
           </Flex>
