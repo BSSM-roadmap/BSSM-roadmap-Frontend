@@ -19,7 +19,7 @@ const CreateRoadMap = () => {
 
   const mutation = useCreateMutation(userId, steps);
 
-  const handleWriteComplete = async () => {
+  const handleWriteComplete = () => {
     mutation.mutate();
   };
 
