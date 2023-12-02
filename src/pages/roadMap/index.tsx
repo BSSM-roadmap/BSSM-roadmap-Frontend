@@ -1,16 +1,15 @@
 import instance from "@/apis/httpClient";
+import LoadingPage from "@/components/Loading";
 import Projects from "@/components/Projects";
 import { Box, Flex } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
+import React from "react";
+import { useQuery } from "react-query";
 
 const RoadMap = () => {
-  const [roadMap, setRoadMap] = useState([]);
+  const { data: roadMap, isLoading } = useQuery("roadMap", () =>
+    instance.get("/roadmap").then((res) => res.data)
+  );
 
-  useEffect(() => {
-    instance.get("/roadmap").then((res) => setRoadMap(res.data));
-  }, []);
-
-  console.log("roadMap", roadMap);
   return (
     <Box maxWidth={"800px"} margin={"0 auto"}>
       <Box
@@ -22,7 +21,9 @@ const RoadMap = () => {
       >
         선배들의 로드맵
       </Box>
-      {roadMap.length < 1 ? (
+      {isLoading ? (
+        <LoadingPage />
+      ) : roadMap && roadMap.length < 1 ? (
         <Flex
           width={"100%"}
           height={"60vh"}
@@ -34,7 +35,7 @@ const RoadMap = () => {
         </Flex>
       ) : (
         <Flex flexDirection={"column"} gap={"10px"} marginBottom={"40px"}>
-          {roadMap.map((data: any) => (
+          {roadMap?.map((data: any) => (
             <Projects key={data.id} data={data} />
           ))}
         </Flex>

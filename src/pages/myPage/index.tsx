@@ -1,18 +1,16 @@
 import { Box, Flex, Text } from "@chakra-ui/react";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
-import { 로드맵 } from "@/dummy/로드맵";
-import { 나의로드맵 } from "@/dummy/나의로드맵";
 import Projects from "@/components/Projects";
 import { useRouter } from "next/router";
-import {
-  useAddRoadMap,
-  useInfoQuery,
-  useRoadMap,
-} from "./services/mutation.service";
+import { useInfoQuery } from "./services/mutation.service";
 import { 유저데이터 } from "@/interface/유저인터페이스";
 import { useRecoilState } from "recoil";
 import { 유저아이디 } from "@/atom/유저아이디";
+import { useQuery } from "react-query";
+import instance from "@/apis/httpClient";
+import { roadMap } from "@/interface/로드맵";
+import LoadingPage from "@/components/Loading";
 
 const MyPage = () => {
   const [myRoadMap, setMyRoadMap] = useState(1);
@@ -21,20 +19,32 @@ const MyPage = () => {
   const [userId, setUserId] = useRecoilState(유저아이디);
 
   const userInfoQuery = useInfoQuery();
-  const userRoadMap = useRoadMap(Number(user?.userId));
-  const userAddRoadMap = useAddRoadMap(Number(user?.userId));
 
   useEffect(() => {
     setUser(userInfoQuery);
+    setUserId(userInfoQuery?.userId);
   }, [userInfoQuery]);
-  setUserId(userInfoQuery?.userId);
+
+  const { data: userRoadMap, isLoading: userRoadMapLoading } = useQuery(
+    ["userRoadMap", userId],
+    () => instance.get(`/user/${userId}/roadmap`).then((res) => res.data),
+    {
+      enabled: !!userId,
+    }
+  );
+
+  const { data: addRoadMap, isLoading: addRoadMapLoading } = useQuery(
+    ["addRoadMap", userId],
+    () => instance.get(`/save/${userId}/roadmap`).then((res) => res.data),
+    {
+      enabled: !!userId,
+    }
+  );
 
   const handleLogout = () => {
     window.localStorage.clear();
     router.push("/", undefined, { shallow: true });
   };
-
-  console.log("userId", userId);
 
   return (
     <Box maxWidth={"800px"} margin={"0 auto"}>
@@ -58,8 +68,8 @@ const MyPage = () => {
                 {user?.grade}학년 / {user?.enrolledAt}년 입학생
               </Text>
               <Text>
-                {(Number(user?.grade) >= 2 && user?.classNo == 1) ||
-                user?.classNo == 2
+                {(Number(user?.grade) >= 2 && user?.classNo === 1) ||
+                user?.classNo === 2
                   ? "소프트웨어 개발과"
                   : "임베디드 개발과"}
               </Text>
@@ -118,9 +128,11 @@ const MyPage = () => {
         </Flex>
         {myRoadMap === 2 ? (
           <Flex flexDirection={"column"} gap={"10px"} marginBottom={"30px"}>
-            {userAddRoadMap?.length > 1 ? (
-              userAddRoadMap.map((data: any) => (
-                <Projects key={data.id} data={data} />
+            {addRoadMapLoading ? (
+              <LoadingPage />
+            ) : addRoadMap?.length > 0 ? (
+              addRoadMap.map((data: roadMap) => (
+                <Projects key={data.roadmapId} data={data} />
               ))
             ) : (
               <Box
@@ -136,9 +148,11 @@ const MyPage = () => {
           </Flex>
         ) : (
           <Flex flexDirection={"column"} gap={"10px"} marginBottom={"30px"}>
-            {userRoadMap?.length > 1 ? (
-              userRoadMap.map((data: any) => (
-                <Projects key={data.id} data={data} />
+            {userRoadMapLoading ? (
+              <LoadingPage />
+            ) : userRoadMap?.length > 0 ? (
+              userRoadMap.map((data: roadMap) => (
+                <Projects key={data.roadmapId} data={data} />
               ))
             ) : (
               <Box

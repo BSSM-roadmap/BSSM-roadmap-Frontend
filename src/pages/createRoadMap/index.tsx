@@ -1,8 +1,6 @@
 import TextArea from "@/components/TextArea";
 import { Box, Button, Flex } from "@chakra-ui/react";
 import React, { useState } from "react";
-import instance from "@/apis/httpClient";
-import Storage from "@/storage";
 import { useRecoilValue } from "recoil";
 import { 유저아이디 } from "@/atom/유저아이디";
 import { useCreateMutation } from "./services/mutation.service";
