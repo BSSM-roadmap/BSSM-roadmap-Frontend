@@ -1,11 +1,15 @@
+// components/TextArea.jsx
+
 import { Box, Textarea } from "@chakra-ui/react";
 import React from "react";
 
-interface textProps {
-  numbers: any;
+interface TextAreaProps {
+  numbers: string;
+  value: string;
+  onChange: (value: string) => void;
 }
 
-const TextArea = ({ numbers }: textProps) => {
+const TextArea = ({ numbers, value, onChange }: TextAreaProps) => {
   return (
     <Box>
       STEP {numbers}
@@ -14,6 +18,8 @@ const TextArea = ({ numbers }: textProps) => {
         borderColor={"gray.300"}
         marginBottom={"20px"}
         marginTop={"10px"}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
       />
     </Box>
   );

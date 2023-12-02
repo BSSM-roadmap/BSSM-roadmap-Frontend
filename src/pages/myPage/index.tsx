@@ -11,11 +11,14 @@ import {
   useRoadMap,
 } from "./services/mutation.service";
 import { 유저데이터 } from "@/interface/유저인터페이스";
+import { useRecoilState } from "recoil";
+import { 유저아이디 } from "@/atom/유저아이디";
 
 const MyPage = () => {
   const [myRoadMap, setMyRoadMap] = useState(1);
   const router = useRouter();
   const [user, setUser] = useState<유저데이터>();
+  const [userId, setUserId] = useRecoilState(유저아이디);
 
   const userInfoQuery = useInfoQuery();
   const userRoadMap = useRoadMap(Number(user?.userId));
@@ -24,11 +27,14 @@ const MyPage = () => {
   useEffect(() => {
     setUser(userInfoQuery);
   }, [userInfoQuery]);
+  setUserId(userInfoQuery?.userId);
 
   const handleLogout = () => {
     window.localStorage.clear();
     router.push("/", undefined, { shallow: true });
   };
+
+  console.log("userId", userId);
 
   return (
     <Box maxWidth={"800px"} margin={"0 auto"}>
