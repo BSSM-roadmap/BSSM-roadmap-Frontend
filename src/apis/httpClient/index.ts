@@ -13,9 +13,11 @@ instance.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
     if (error.response.data.code === ERROR.CODE.TOKEN_403_2) {
-      await refresh();
+      const newToken = await refresh();
+      originalRequest.headers.Authorization = newToken;
       return instance(originalRequest);
     }
+    return Promise.reject(error);
   }
 );
 
