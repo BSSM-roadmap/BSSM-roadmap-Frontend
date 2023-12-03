@@ -9,8 +9,6 @@ import { roadMap } from "@/interface/로드맵";
 import { 유저데이터 } from "@/interface/유저인터페이스";
 import { 유저아이디 } from "@/atom/유저아이디";
 import { IoMdMore } from "react-icons/io";
-import { toast } from "react-toastify";
-import Storage from "@/storage";
 import { useDeleteMutation } from "./services/api.service";
 
 const RoadMapDetail = () => {
@@ -105,6 +103,9 @@ const RoadMapDetail = () => {
                       alignItems={"center"}
                       justifyContent={"center"}
                       fontSize={"0.9rem"}
+                      onClick={() => {
+                        router.push(`/modifyRoadMap/${id}`);
+                      }}
                     >
                       수정
                     </Flex>
