@@ -105,6 +105,9 @@ const RoadMapDetail = () => {
                       alignItems={"center"}
                       justifyContent={"center"}
                       fontSize={"0.9rem"}
+                      onClick={() => {
+                        router.push(`/modifyRoadMap/${id}`);
+                      }}
                     >
                       수정
                     </Flex>
