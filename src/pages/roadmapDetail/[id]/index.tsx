@@ -1,35 +1,68 @@
-import { 로드맵정보 } from "@/atom/로드맵정보";
 import Project from "@/components/Project";
 import { Box, Flex, Text } from "@chakra-ui/react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
-import { BsArrowDownSquareFill } from "react-icons/bs";
-import Image from "next/image";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { IoIosArrowDown } from "react-icons/io";
+import instance from "@/apis/httpClient";
+import { useRouter } from "next/router";
+import { roadMap } from "@/interface/로드맵";
+import { 유저데이터 } from "@/interface/유저인터페이스";
+import { 유저아이디 } from "@/atom/유저아이디";
+import { IoMdMore } from "react-icons/io";
+import { toast } from "react-toastify";
+import Storage from "@/storage";
+import { useDeleteMutation } from "./services/api.service";
 
 const RoadMapDetail = () => {
-  const state = useRecoilValue(로드맵정보);
-  const notify = () => toast.success("찜하기 완료!");
+  const [userProfile, setUserProfile] = useState<유저데이터>();
+  const [roadMapp, setRoadMapp] = useState<roadMap>();
+  const [isOpen, setIsOpen] = useState(false);
+
+  const userId = useRecoilValue(유저아이디);
+
+  const router = useRouter();
+  const { id } = router.query;
+
+  useEffect(() => {
+    if (id) {
+      instance
+        .get(`/roadmap/${id}`)
+        .then((res) => setRoadMapp(res.data))
+        .catch((error) => {
+          console.error("Error fetching user profile:", error);
+        });
+    }
+  }, [id]);
+
+  useEffect(() => {
+    if (roadMapp?.userId) {
+      instance
+        .get(`/user/${roadMapp.userId}`)
+        .then((res) => setUserProfile(res.data))
+        .catch((error) => {
+          console.error("Error fetching user profile:", error);
+        });
+    }
+  }, [roadMapp]);
+
+  const notify = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const { mutate } = useDeleteMutation(Number(roadMapp?.roadmapId));
+
+  const deleteRoadMap = () => {
+    mutate();
+  };
 
   return (
     <Box>
-      <ToastContainer
-        position="top-right"
-        autoClose={3000}
-        hideProgressBar={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
       <Flex
         width={"800px"}
         margin={"0 auto"}
         flexDirection={"column"}
         gap={"1rem"}
-        marginBottom={"1rem"}
+        marginBottom={"3rem"}
       >
         <Flex
           fontSize={"1.6rem"}
@@ -41,37 +74,74 @@ const RoadMapDetail = () => {
           justifyContent={"space-between"}
           alignItems={"center"}
         >
-          {state.title}
+          <Text fontSize={"24px"}>
+            {userProfile?.name}
+            <span style={{ fontSize: "18px" }}> 님의 로드맵</span>
+          </Text>
           <Flex
             cursor={"pointer"}
             alignItems={"center"}
             gap={"0.5rem"}
             flexDirection={"column"}
-            onClick={notify}
           >
-            <Text fontSize={"0.8rem"}>로드맵 저장하기</Text>
+            {userId == roadMapp?.userId && (
+              <>
+                <Text fontSize={"1.5rem"} onClick={notify}>
+                  <IoMdMore />
+                </Text>
+                {isOpen && (
+                  <Flex
+                    position={"absolute"}
+                    width={"5rem"}
+                    height={"3.5rem"}
+                    backgroundColor={"gray.200"}
+                    marginLeft={"7rem"}
+                    borderRadius={"0.3rem"}
+                    flexDirection={"column"}
+                  >
+                    <Flex
+                      width={"100%"}
+                      height={"50%"}
+                      alignItems={"center"}
+                      justifyContent={"center"}
+                      fontSize={"0.9rem"}
+                    >
+                      수정
+                    </Flex>
+                    <Flex
+                      width={"100%"}
+                      height={"50%"}
+                      alignItems={"center"}
+                      justifyContent={"center"}
+                      fontSize={"0.9rem"}
+                      borderTop={"1px solid white"}
+                      onClick={deleteRoadMap}
+                    >
+                      삭제
+                    </Flex>
+                  </Flex>
+                )}
+              </>
+            )}
           </Flex>
         </Flex>
-        <Project state={state.step1} number={"01"} />
+        <Project state={roadMapp?.steps[0]} number={"01"} />
         <Text margin={"0 auto"}>
-          <BsArrowDownSquareFill />
+          <IoIosArrowDown />
         </Text>
-        <Project state={state.step2} number={"02"} />
+        <Project state={roadMapp?.steps[1]} number={"02"} />
         <Text margin={"0 auto"}>
-          <BsArrowDownSquareFill />
+          <IoIosArrowDown />
         </Text>
-        <Project state={state.step3} number={"03"} />
+        <Project state={roadMapp?.steps[2]} number={"03"} />
         <Text margin={"0 auto"}>
-          <BsArrowDownSquareFill />
+          <IoIosArrowDown />
         </Text>
-        <Project state={state.step4} number={"04"} />
+        <Project state={roadMapp?.steps[3]} number={"04"} />
         <Text margin={"0 auto"}>
-          <BsArrowDownSquareFill />
+          <IoIosArrowDown />
         </Text>
-        <Project state={state.step5} number={"05"} />
-        <Text margin={"0 auto"}>
-          <Image src="/images/crown.png" width={60} height={60} alt="img" />
-        </Text>
+        <Project state={roadMapp?.steps[4]} number={"05"} />
       </Flex>
     </Box>
   );

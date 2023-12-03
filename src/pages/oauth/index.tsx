@@ -12,7 +12,6 @@ const useOAuth = () => {
 
   React.useEffect(() => {
     if (authCode) {
-      console.log(authCode);
       mutate();
     }
   }, [authCode, mutate]);

@@ -3,11 +3,10 @@ import React from "react";
 
 const Project = ({ state, number }: any) => {
   return (
-    <Flex flexDirection={"column"} gap={"1rem"}>
+    <Flex flexDirection={"column"} gap={"1rem"} minHeight={"3rem"}>
       <Flex
         backgroundColor={"gray.200"}
         width={"100%"}
-        height={"135px"}
         borderRadius={"0.5rem"}
         padding={"10px"}
         flexDirection={"column"}
@@ -17,17 +16,18 @@ const Project = ({ state, number }: any) => {
           backgroundColor={"darkblue"}
           width={"10%"}
           borderRadius={"0.3rem"}
-          height={"30px"}
+          height={"2rem"}
           color={"white"}
           display={"flex"}
           alignItems={"center"}
           justifyContent={"center"}
+          marginBottom={"0.5rem"}
         >
           STEP {number}
         </Box>
         <Box
           width={"100%"}
-          height={"75px"}
+          height={"80%"}
           backgroundColor={"white"}
           borderRadius={"0.3rem"}
           padding={"5px"}

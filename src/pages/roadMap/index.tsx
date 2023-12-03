@@ -2,13 +2,25 @@ import instance from "@/apis/httpClient";
 import LoadingPage from "@/components/Loading";
 import Projects from "@/components/Projects";
 import { Box, Flex } from "@chakra-ui/react";
-import React from "react";
 import { useQuery } from "react-query";
+import { useRecoilState } from "recoil";
+import { useInfoQuery } from "../myPage/services/mutation.service";
+import { useEffect } from "react";
+import { 유저아이디 } from "@/atom/유저아이디";
 
 const RoadMap = () => {
-  const { data: roadMap, isLoading } = useQuery("roadMap", () =>
-    instance.get("/roadmap").then((res) => res.data)
+  const { data: roadMap, isLoading } = useQuery(
+    ["roadMap", "createRoadMap", "deleteRoadMap"],
+    () => instance.get("/roadmap").then((res) => res.data)
   );
+
+  const [userId, setUserId] = useRecoilState(유저아이디);
+
+  const userInfoQuery = useInfoQuery();
+
+  useEffect(() => {
+    setUserId(userInfoQuery?.userId);
+  }, [userInfoQuery]);
 
   return (
     <Box maxWidth={"800px"} margin={"0 auto"}>

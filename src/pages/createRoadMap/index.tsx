@@ -1,13 +1,16 @@
 import TextArea from "@/components/TextArea";
 import { Box, Button, Flex } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { useRecoilValue } from "recoil";
 import { 유저아이디 } from "@/atom/유저아이디";
 import { useCreateMutation } from "./services/mutation.service";
+import { toast } from "react-toastify";
+import { useRouter } from "next/router";
 
 const CreateRoadMap = () => {
   const [steps, setSteps] = useState<string[]>(["", "", "", "", ""]);
   const userId = useRecoilValue(유저아이디);
+  const router = useRouter();
 
   const handleTextAreaChange = (index: number, value: string) => {
     const newMessages = [...steps];
@@ -17,8 +20,15 @@ const CreateRoadMap = () => {
 
   const mutation = useCreateMutation(userId, steps);
 
-  const handleWriteComplete = () => {
+  const createRoadMap = () => {
+    if (steps.some((step) => step.length < 5)) {
+      toast.error("적어도 5글자 이상이어야 합니다.");
+      return;
+    }
+
+    toast.success("게시글 작성 성공");
     mutation.mutate();
+    router.push("/roadMap");
   };
 
   return (
@@ -61,7 +71,7 @@ const CreateRoadMap = () => {
         _hover={{ bg: "#100061" }}
         marginBottom={"30px"}
         float={"right"}
-        onClick={handleWriteComplete}
+        onClick={createRoadMap}
       >
         작성완료
       </Button>
