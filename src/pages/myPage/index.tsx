@@ -11,7 +11,7 @@ import { useQuery } from "react-query";
 import instance from "@/apis/httpClient";
 import { roadMap } from "@/interface/로드맵";
 import LoadingPage from "@/components/Loading";
-import { heartCount } from "@/apis";
+import Storage from "@/storage";
 
 const MyPage = () => {
   const [myRoadMap, setMyRoadMap] = useState(1);
@@ -26,27 +26,49 @@ const MyPage = () => {
     setUserId(userInfoQuery?.userId);
   }, [userInfoQuery]);
 
+  const token = Storage.getItem("TOKEN:ACCESS");
   const { data: userRoadMap, isLoading: userRoadMapLoading } = useQuery(
-    ["userRoadMap", userId],
-    () => instance.get(`/user/${userId}/roadmap`).then((res) => res.data),
+    ["roadMap"],
+    () => {
+      const config = {
+        headers: {
+          Authorization: token,
+        },
+      };
+
+      return instance
+        .get(`/user/${userId}/roadmap`, config)
+        .then((res) => res.data);
+    },
     {
       enabled: !!userId,
     }
   );
 
   const { data: addRoadMap, isLoading: addRoadMapLoading } = useQuery(
-    ["addRoadMap", userId, "ProjectLiked"],
-    () => instance.get(`/save/${userId}/roadmap`).then((res) => res.data),
+    ["roadMap"],
+    () => {
+      const config = {
+        headers: {
+          Authorization: token,
+        },
+      };
+
+      return instance
+        .get(`/save/${userId}/roadmap`, config)
+        .then((res) => res.data);
+    },
     {
       enabled: !!userId,
     }
   );
-
   const handleLogout = () => {
     window.localStorage.clear();
     router.push("/", undefined, { shallow: true });
   };
 
+  console.log("userRoadMap", userRoadMap);
+  console.log("addRoadMap", addRoadMap);
   return (
     <Box maxWidth={"800px"} margin={"0 auto"}>
       <Flex
