@@ -3,7 +3,6 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import Projects from "@/components/Projects";
 import { useRouter } from "next/router";
-import { useInfoQuery } from "./services/mutation.service";
 import { 유저데이터 } from "@/interface/유저인터페이스";
 import { useRecoilState } from "recoil";
 import { 유저아이디 } from "@/atom/유저아이디";
@@ -12,12 +11,20 @@ import instance from "@/apis/httpClient";
 import { roadMap } from "@/interface/로드맵";
 import LoadingPage from "@/components/Loading";
 import Storage from "@/storage";
+import { getUser } from "@/apis";
 
 const MyPage = () => {
   const [myRoadMap, setMyRoadMap] = useState(1);
   const router = useRouter();
   const [user, setUser] = useState<유저데이터>();
   const [userId, setUserId] = useRecoilState(유저아이디);
+
+  const useInfoQuery = () => {
+    return useQuery({
+      queryKey: ["user"],
+      queryFn: () => getUser(),
+    }).data;
+  };
 
   const userInfoQuery = useInfoQuery();
 

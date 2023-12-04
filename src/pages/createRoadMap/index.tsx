@@ -3,9 +3,10 @@ import { Box, Button, Flex } from "@chakra-ui/react";
 import React, { useRef, useState } from "react";
 import { useRecoilValue } from "recoil";
 import { 유저아이디 } from "@/atom/유저아이디";
-import { useCreateMutation } from "./services/mutation.service";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
+import { useMutation, useQueryClient } from "react-query";
+import { createRoadMaps } from "@/apis";
 
 const CreateRoadMap = () => {
   const [steps, setSteps] = useState<string[]>(["", "", "", "", ""]);
@@ -18,7 +19,15 @@ const CreateRoadMap = () => {
     setSteps(newMessages);
   };
 
-  const mutation = useCreateMutation(userId, steps);
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    mutationKey: ["createRoadMap"],
+    mutationFn: () => createRoadMaps(userId, steps),
+    onSuccess: () => {
+      queryClient.invalidateQueries("roadMap");
+    },
+  });
 
   const createRoadMap = () => {
     if (steps.some((step) => step.length < 5)) {

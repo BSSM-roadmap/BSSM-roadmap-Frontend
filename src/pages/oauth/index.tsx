@@ -1,12 +1,22 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import React from "react";
-import { useLoginMutation } from "./services/mutation.service";
-import { TOKEN } from "@/storage/constants";
+import { useMutation } from "react-query";
 import Storage from "@/storage";
+import { TOKEN } from "@/storage/constants";
+import { login } from "@/apis";
 
 const useOAuth = () => {
   const router = useRouter();
   const authCode = useSearchParams().get("code");
+
+  const useLoginMutation = (authCode: string | null) => {
+    return useMutation(() => login(authCode), {
+      onSuccess: ({ accessToken, refreshToken }) => {
+        Storage.setItem(TOKEN.ACCESS, accessToken);
+        Storage.setItem(TOKEN.REFRESH, refreshToken);
+      },
+    });
+  };
 
   const { isSuccess, mutate } = useLoginMutation(authCode);
 

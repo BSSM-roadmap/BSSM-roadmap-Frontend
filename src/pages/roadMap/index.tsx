@@ -4,10 +4,9 @@ import Projects from "@/components/Projects";
 import { Box, Flex } from "@chakra-ui/react";
 import { useQuery } from "react-query";
 import { useRecoilState } from "recoil";
-import { useInfoQuery } from "../myPage/services/mutation.service";
 import { useEffect, useState } from "react";
 import { 유저아이디 } from "@/atom/유저아이디";
-import { heartCount } from "@/apis";
+import { getUser, heartCount } from "@/apis";
 import Storage from "@/storage";
 
 const RoadMap = () => {
@@ -26,6 +25,13 @@ const RoadMap = () => {
   const [userId, setUserId] = useRecoilState(유저아이디);
   const [hearts, setHearts] = useState();
 
+  const useInfoQuery = () => {
+    return useQuery({
+      queryKey: ["user"],
+      queryFn: () => getUser(),
+    }).data;
+  };
+
   const userInfoQuery = useInfoQuery();
 
   useEffect(() => {
@@ -33,7 +39,7 @@ const RoadMap = () => {
   }, [userInfoQuery]);
 
   useQuery({
-    queryKey: ["ProjectLiked", "params"],
+    queryKey: ["ProjectLiked", "params", "roadMap"],
     queryFn: () => heartCount(Number(roadMap?.roadmapId)),
     onSuccess: (data) => {
       setHearts(data);

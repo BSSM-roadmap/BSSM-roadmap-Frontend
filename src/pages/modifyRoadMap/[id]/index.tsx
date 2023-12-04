@@ -1,12 +1,11 @@
 import TextArea from "@/components/TextArea";
 import { Box, Button, Flex } from "@chakra-ui/react";
 import React, { useEffect, useRef, useState } from "react";
-import { useRecoilValue } from "recoil";
-import { 유저아이디 } from "@/atom/유저아이디";
-import { useModifyMutation } from "./services/mutation.service";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
 import instance from "@/apis/httpClient";
+import { useMutation, useQueryClient } from "react-query";
+import { modifyRoadMaps } from "@/apis";
 
 const ModifyRoadMap = () => {
   const [steps, setSteps] = useState<string[]>(["", "", "", "", ""]);
@@ -20,7 +19,15 @@ const ModifyRoadMap = () => {
     setSteps(newMessages);
   };
 
-  const modifyMutation = useModifyMutation(Number(id), steps);
+  const queryClient = useQueryClient();
+
+  const modifyMutation = useMutation({
+    mutationKey: ["roadMap"],
+    mutationFn: () => modifyRoadMaps(Number(id), steps),
+    onSuccess: () => {
+      queryClient.invalidateQueries("roadMap");
+    },
+  });
 
   const modifyRoadMap = () => {
     if (steps.some((step) => step.length < 5)) {

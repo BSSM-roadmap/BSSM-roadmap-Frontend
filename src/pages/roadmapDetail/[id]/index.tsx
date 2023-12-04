@@ -9,8 +9,10 @@ import { roadMap } from "@/interface/로드맵";
 import { 유저데이터 } from "@/interface/유저인터페이스";
 import { 유저아이디 } from "@/atom/유저아이디";
 import { IoMdMore } from "react-icons/io";
-import { useDeleteMutation } from "./services/api.service";
 import Image from "next/image";
+import { useMutation } from "react-query";
+import Storage from "@/storage";
+import { toast } from "react-toastify";
 
 const RoadMapDetail = () => {
   const [userProfile, setUserProfile] = useState<유저데이터>();
@@ -21,6 +23,29 @@ const RoadMapDetail = () => {
 
   const router = useRouter();
   const { id } = router.query;
+
+  const useDeleteMutation = (roadmapId: number) => {
+    const router = useRouter();
+
+    return useMutation({
+      mutationKey: ["deleteRoadMap"],
+      mutationFn: async () => {
+        if (typeof window !== "undefined") {
+          const token = Storage.getItem("TOKEN:ACCESS");
+          if (token) {
+            await instance.delete(`/roadmap/${roadmapId}`, {
+              headers: {
+                Authorization: token,
+              },
+            });
+
+            toast.success("로드맵이 삭제되었습니다.");
+            router.push("/roadMap");
+          }
+        }
+      },
+    });
+  };
 
   useEffect(() => {
     if (id) {
