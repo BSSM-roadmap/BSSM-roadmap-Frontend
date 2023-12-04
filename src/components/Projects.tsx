@@ -11,7 +11,7 @@ import { useMutation, useQueryClient } from "react-query";
 import { aHeart, dHeart } from "@/apis";
 import { useRecoilValue } from "recoil";
 import { 유저아이디 } from "@/atom/유저아이디";
-import Storage from "@/storage";
+import { IoMdHeart } from "react-icons/io";
 
 interface projectProps {
   data: roadMap;
@@ -42,20 +42,24 @@ const Projects = ({ data }: projectProps) => {
   const addHeart = useMutation({
     mutationFn: () => aHeart(Number(data?.roadmapId), userId),
     onSuccess: () => {
-      queryClient.invalidateQueries(["addRoadMap", userId, "ProjectLiked"]);
+      queryClient.invalidateQueries(["roadMap"]);
     },
   });
 
   const deleteHeart = useMutation({
-    mutationFn: () => dHeart(Number(data?.roadmapId)),
+    mutationFn: () => dHeart(Number(data?.roadmapId), userId),
     onSuccess: () => {
-      queryClient.invalidateQueries(["addRoadMap", userId, "ProjectLiked"]);
+      queryClient.invalidateQueries(["roadMap"]);
     },
   });
 
   const heartController = (e: React.MouseEvent<SVGElement, MouseEvent>) => {
     e.stopPropagation();
-    addHeart.mutate();
+    if (data.saveState == true) {
+      deleteHeart.mutate();
+    } else {
+      addHeart.mutate();
+    }
   };
 
   return (
@@ -104,14 +108,26 @@ const Projects = ({ data }: projectProps) => {
           </Flex>
         </Box>
         <Flex alignItems={"center"} marginRight={"0.5rem"}>
-          <CiHeart
-            style={{
-              width: "1.3rem",
-              height: "1.3rem",
-              marginRight: "0.3rem",
-            }}
-            onClick={heartController}
-          />
+          {data.saveState ? (
+            <IoMdHeart
+              style={{
+                width: "1.3rem",
+                height: "1.3rem",
+                marginRight: "0.3rem",
+              }}
+              onClick={heartController}
+            />
+          ) : (
+            <CiHeart
+              style={{
+                width: "1.3rem",
+                height: "1.3rem",
+                marginRight: "0.3rem",
+              }}
+              onClick={heartController}
+            />
+          )}
+          {data.saveCount}
         </Flex>
       </Flex>
     </Flex>

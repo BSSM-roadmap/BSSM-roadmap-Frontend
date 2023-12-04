@@ -8,12 +8,20 @@ import { useInfoQuery } from "../myPage/services/mutation.service";
 import { useEffect, useState } from "react";
 import { 유저아이디 } from "@/atom/유저아이디";
 import { heartCount } from "@/apis";
+import Storage from "@/storage";
 
 const RoadMap = () => {
-  const { data: roadMap, isLoading } = useQuery(
-    ["roadMap", "createRoadMap", "deleteRoadMap"],
-    () => instance.get("/roadmap").then((res) => res.data)
-  );
+  const token = Storage.getItem("TOKEN:ACCESS");
+
+  const { data: roadMap, isLoading } = useQuery(["roadMap"], () => {
+    const config = {
+      headers: {
+        Authorization: token,
+      },
+    };
+
+    return instance.get("/roadmap", config).then((res) => res.data);
+  });
 
   const [userId, setUserId] = useRecoilState(유저아이디);
   const [hearts, setHearts] = useState();
@@ -28,7 +36,6 @@ const RoadMap = () => {
     queryKey: ["ProjectLiked", "params"],
     queryFn: () => heartCount(Number(roadMap?.roadmapId)),
     onSuccess: (data) => {
-      console.log("like.data", data);
       setHearts(data);
     },
   });
@@ -63,8 +70,6 @@ const RoadMap = () => {
           ))}
         </Flex>
       )}
-
-      {hearts}
     </Box>
   );
 };

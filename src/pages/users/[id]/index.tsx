@@ -4,12 +4,11 @@ import React, { useEffect, useState } from "react";
 import Projects from "@/components/Projects";
 import { useRouter } from "next/router";
 import { 유저데이터 } from "@/interface/유저인터페이스";
-import { useRecoilState } from "recoil";
-import { 유저아이디 } from "@/atom/유저아이디";
 import { useQuery } from "react-query";
 import instance from "@/apis/httpClient";
 import { roadMap } from "@/interface/로드맵";
 import LoadingPage from "@/components/Loading";
+import Storage from "@/storage";
 
 const Useres = () => {
   const [myRoadMap, setMyRoadMap] = useState(1);
@@ -31,17 +30,38 @@ const Useres = () => {
     fetchData();
   }, [id]);
 
+  const token = Storage.getItem("TOKEN:ACCESS");
   const { data: userRoadMap, isLoading: userRoadMapLoading } = useQuery(
-    ["userRoadMap", user?.userId],
-    () => instance.get(`/user/${user?.userId}/roadmap`).then((res) => res.data),
+    ["roadMap"],
+    () => {
+      const config = {
+        headers: {
+          Authorization: token,
+        },
+      };
+
+      return instance
+        .get(`/user/${user?.userId}/roadmap`, config)
+        .then((res) => res.data);
+    },
     {
       enabled: !!user?.userId,
     }
   );
 
   const { data: addRoadMap, isLoading: addRoadMapLoading } = useQuery(
-    ["addRoadMap", user?.userId],
-    () => instance.get(`/save/${user?.userId}/roadmap`).then((res) => res.data),
+    ["roadMap"],
+    () => {
+      const config = {
+        headers: {
+          Authorization: token,
+        },
+      };
+
+      return instance
+        .get(`/save/${user?.userId}/roadmap`, config)
+        .then((res) => res.data);
+    },
     {
       enabled: !!user?.userId,
     }

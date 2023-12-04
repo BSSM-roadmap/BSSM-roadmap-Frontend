@@ -18,11 +18,12 @@ export const aHeart = async (roadmapId: number, userId: number) => {
   }
 };
 
-export const dHeart = async (roadmapId: number) => {
+export const dHeart = async (roadmapId: number, userId: number) => {
   if (typeof window !== "undefined") {
     const token = Storage.getItem("TOKEN:ACCESS");
     if (token) {
       await instance.delete(`/save/${roadmapId}`, {
+        params: { userId: userId },
         headers: {
           authorization: token,
         },
