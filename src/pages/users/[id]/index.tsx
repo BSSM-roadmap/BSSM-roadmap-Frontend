@@ -3,7 +3,6 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import Projects from "@/components/Projects";
 import { useRouter } from "next/router";
-import { useInfoQuery } from "./services/mutation.service";
 import { 유저데이터 } from "@/interface/유저인터페이스";
 import { useRecoilState } from "recoil";
 import { 유저아이디 } from "@/atom/유저아이디";
@@ -11,41 +10,44 @@ import { useQuery } from "react-query";
 import instance from "@/apis/httpClient";
 import { roadMap } from "@/interface/로드맵";
 import LoadingPage from "@/components/Loading";
-import { heartCount } from "@/apis";
 
-const MyPage = () => {
+const Useres = () => {
   const [myRoadMap, setMyRoadMap] = useState(1);
   const router = useRouter();
   const [user, setUser] = useState<유저데이터>();
-  const [userId, setUserId] = useRecoilState(유저아이디);
-
-  const userInfoQuery = useInfoQuery();
+  const { id } = router.query;
 
   useEffect(() => {
-    setUser(userInfoQuery);
-    setUserId(userInfoQuery?.userId);
-  }, [userInfoQuery]);
+    const fetchData = async () => {
+      try {
+        const response = await instance.get(`/user/${id}`);
+        const data = response.data;
+        setUser(data);
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+
+    fetchData();
+  }, [id]);
 
   const { data: userRoadMap, isLoading: userRoadMapLoading } = useQuery(
-    ["userRoadMap", userId],
-    () => instance.get(`/user/${userId}/roadmap`).then((res) => res.data),
+    ["userRoadMap", user?.userId],
+    () => instance.get(`/user/${user?.userId}/roadmap`).then((res) => res.data),
     {
-      enabled: !!userId,
+      enabled: !!user?.userId,
     }
   );
 
   const { data: addRoadMap, isLoading: addRoadMapLoading } = useQuery(
-    ["addRoadMap", userId, "ProjectLiked"],
-    () => instance.get(`/save/${userId}/roadmap`).then((res) => res.data),
+    ["addRoadMap", user?.userId],
+    () => instance.get(`/save/${user?.userId}/roadmap`).then((res) => res.data),
     {
-      enabled: !!userId,
+      enabled: !!user?.userId,
     }
   );
 
-  const handleLogout = () => {
-    window.localStorage.clear();
-    router.push("/", undefined, { shallow: true });
-  };
+  console.log("userId", user?.userId);
 
   return (
     <Box maxWidth={"800px"} margin={"0 auto"}>
@@ -74,20 +76,6 @@ const MyPage = () => {
                   ? "소프트웨어 개발과"
                   : "임베디드 개발과"}
               </Text>
-            </Box>
-            <Box flexDirection={"column"} gap={"0.5rem"} marginTop={"26px"}>
-              <Text cursor={"pointer"} onClick={handleLogout}>
-                로그아웃
-              </Text>
-              <Flex
-                cursor={"pointer"}
-                gap={"0.3rem"}
-                onClick={() => {
-                  router.push("/createRoadMap");
-                }}
-              >
-                로드맵 작성
-              </Flex>
             </Box>
           </Flex>
         </Flex>
@@ -173,4 +161,4 @@ const MyPage = () => {
   );
 };
 
-export default MyPage;
+export default Useres;

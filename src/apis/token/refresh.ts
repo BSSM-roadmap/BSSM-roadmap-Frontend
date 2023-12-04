@@ -7,13 +7,17 @@ const instance = axios.create({
 });
 
 const refresh = async () => {
-  try {
-    const { data } = await instance.put("/login/token", {
-      refreshToken: `${Storage.getItem("TOKEN:REFRESH")}`,
-    });
-    Storage.setItem(TOKEN.ACCESS, data.accessToken);
-  } catch (err) {
-    Storage.clear();
+  if (typeof window !== "undefined") {
+    const token = Storage.getItem("TOKEN:ACCESS");
+    if (token) {
+      const { data } = await instance.put("/login/token", {
+        headers: {
+          authorization: `${Storage.getItem("TOKEN:ACCESS")}`,
+          "refresh-token": `${Storage.getItem("TOKEN:REFRESH")}`,
+        },
+      });
+      Storage.setItem(TOKEN.ACCESS, data.accessToken);
+    }
   }
 };
 
