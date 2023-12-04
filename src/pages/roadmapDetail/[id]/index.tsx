@@ -10,6 +10,7 @@ import { 유저데이터 } from "@/interface/유저인터페이스";
 import { 유저아이디 } from "@/atom/유저아이디";
 import { IoMdMore } from "react-icons/io";
 import { useDeleteMutation } from "./services/api.service";
+import Image from "next/image";
 
 const RoadMapDetail = () => {
   const [userProfile, setUserProfile] = useState<유저데이터>();
@@ -53,6 +54,14 @@ const RoadMapDetail = () => {
     mutate();
   };
 
+  const routingUsers = () => {
+    if (userProfile?.userId == userId) {
+      router.push("/myPage");
+    } else {
+      router.push(`/users/${userProfile?.userId}`);
+    }
+  };
+
   return (
     <Box>
       <Flex
@@ -72,10 +81,20 @@ const RoadMapDetail = () => {
           justifyContent={"space-between"}
           alignItems={"center"}
         >
-          <Text fontSize={"24px"}>
-            {userProfile?.name}
-            <span style={{ fontSize: "18px" }}> 님의 로드맵</span>
-          </Text>
+          <Flex alignItems={"flex-end"}>
+            <Image
+              src="/images/user.png"
+              width={40}
+              height={40}
+              alt="img"
+              style={{ cursor: "pointer" }}
+              onClick={routingUsers}
+            />
+            <Text marginLeft={"0.5rem"}>{userProfile?.name}</Text>
+            <Text fontSize={"24px"} marginLeft={"3px"}>
+              <span style={{ fontSize: "18px" }}> 님의 로드맵</span>
+            </Text>
+          </Flex>
           <Flex
             cursor={"pointer"}
             alignItems={"center"}

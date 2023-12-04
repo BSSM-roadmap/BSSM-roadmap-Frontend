@@ -11,9 +11,8 @@ import { useQuery } from "react-query";
 import instance from "@/apis/httpClient";
 import { roadMap } from "@/interface/로드맵";
 import LoadingPage from "@/components/Loading";
-import { heartCount } from "@/apis";
 
-const MyPage = () => {
+const Users = () => {
   const [myRoadMap, setMyRoadMap] = useState(1);
   const router = useRouter();
   const [user, setUser] = useState<유저데이터>();
@@ -35,7 +34,7 @@ const MyPage = () => {
   );
 
   const { data: addRoadMap, isLoading: addRoadMapLoading } = useQuery(
-    ["addRoadMap", userId, "ProjectLiked"],
+    ["addRoadMap", userId],
     () => instance.get(`/save/${userId}/roadmap`).then((res) => res.data),
     {
       enabled: !!userId,
@@ -173,4 +172,4 @@ const MyPage = () => {
   );
 };
 
-export default MyPage;
+export default Users;

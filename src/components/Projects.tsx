@@ -6,6 +6,12 @@ import React, { useEffect, useState } from "react";
 import { roadMap } from "@/interface/로드맵";
 import { 유저데이터 } from "@/interface/유저인터페이스";
 import instance from "@/apis/httpClient";
+import { CiHeart } from "react-icons/ci";
+import { useMutation, useQueryClient } from "react-query";
+import { aHeart, dHeart } from "@/apis";
+import { useRecoilValue } from "recoil";
+import { 유저아이디 } from "@/atom/유저아이디";
+import Storage from "@/storage";
 
 interface projectProps {
   data: roadMap;
@@ -15,6 +21,7 @@ const Projects = ({ data }: projectProps) => {
   const router = useRouter();
 
   const [userProfile, setUserProfile] = useState<유저데이터>();
+  const userId = useRecoilValue(유저아이디);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -29,6 +36,27 @@ const Projects = ({ data }: projectProps) => {
 
     fetchData();
   }, []);
+
+  const queryClient = useQueryClient();
+
+  const addHeart = useMutation({
+    mutationFn: () => aHeart(Number(data?.roadmapId), userId),
+    onSuccess: () => {
+      queryClient.invalidateQueries(["addRoadMap", userId, "ProjectLiked"]);
+    },
+  });
+
+  const deleteHeart = useMutation({
+    mutationFn: () => dHeart(Number(data?.roadmapId)),
+    onSuccess: () => {
+      queryClient.invalidateQueries(["addRoadMap", userId, "ProjectLiked"]);
+    },
+  });
+
+  const heartController = (e: React.MouseEvent<SVGElement, MouseEvent>) => {
+    e.stopPropagation();
+    addHeart.mutate();
+  };
 
   return (
     <Flex
@@ -55,25 +83,37 @@ const Projects = ({ data }: projectProps) => {
       >
         <Image src="/images/road.png" width={50} height={50} alt="img" />
       </Flex>
-      <Box>
-        <Text fontWeight={"semibold"}>
-          <span style={{ marginRight: "10px" }}>
-            {userProfile?.name}님의 로드맵
-          </span>{" "}
-          ({userProfile?.enrolledAt}
-          입학생)
-        </Text>
-        <Flex>
-          <Flex marginRight={"10px"}>
-            <Text fontWeight={"semibold"}>01. </Text>
-            {truncateText(data.steps[0], 19)}
-          </Flex>
+      <Flex width={"100%"} justifyContent={"space-between"}>
+        <Box>
+          <Text fontWeight={"semibold"}>
+            <span style={{ marginRight: "10px" }}>
+              {userProfile?.name}님의 로드맵
+            </span>{" "}
+            ({userProfile?.enrolledAt}
+            입학생)
+          </Text>
           <Flex>
-            <Text fontWeight={"semibold"}>02. </Text>
-            {truncateText(data.steps[1], 19)}
+            <Flex marginRight={"10px"}>
+              <Text fontWeight={"semibold"}>01. </Text>
+              {truncateText(data.steps[0], 20)}
+            </Flex>
+            <Flex>
+              <Text fontWeight={"semibold"}>02. </Text>
+              {truncateText(data.steps[1], 20)}
+            </Flex>
           </Flex>
+        </Box>
+        <Flex alignItems={"center"} marginRight={"0.5rem"}>
+          <CiHeart
+            style={{
+              width: "1.3rem",
+              height: "1.3rem",
+              marginRight: "0.3rem",
+            }}
+            onClick={heartController}
+          />
         </Flex>
-      </Box>
+      </Flex>
     </Flex>
   );
 };

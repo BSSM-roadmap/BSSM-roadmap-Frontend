@@ -5,8 +5,9 @@ import { Box, Flex } from "@chakra-ui/react";
 import { useQuery } from "react-query";
 import { useRecoilState } from "recoil";
 import { useInfoQuery } from "../myPage/services/mutation.service";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { 유저아이디 } from "@/atom/유저아이디";
+import { heartCount } from "@/apis";
 
 const RoadMap = () => {
   const { data: roadMap, isLoading } = useQuery(
@@ -15,12 +16,22 @@ const RoadMap = () => {
   );
 
   const [userId, setUserId] = useRecoilState(유저아이디);
+  const [hearts, setHearts] = useState();
 
   const userInfoQuery = useInfoQuery();
 
   useEffect(() => {
     setUserId(userInfoQuery?.userId);
   }, [userInfoQuery]);
+
+  useQuery({
+    queryKey: ["ProjectLiked", "params"],
+    queryFn: () => heartCount(Number(roadMap?.roadmapId)),
+    onSuccess: (data) => {
+      console.log("like.data", data);
+      setHearts(data);
+    },
+  });
 
   return (
     <Box maxWidth={"800px"} margin={"0 auto"}>
@@ -52,6 +63,8 @@ const RoadMap = () => {
           ))}
         </Flex>
       )}
+
+      {hearts}
     </Box>
   );
 };
