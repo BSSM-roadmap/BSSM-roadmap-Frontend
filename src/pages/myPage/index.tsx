@@ -60,15 +60,9 @@ const MyPage = () => {
     },
   };
 
-  const addQuery = () =>
-    instance
-      .get(`/save/${userId}/roadmap`, config)
-      .then((res) => setAddRoadMap(res.data));
-
-  const { data, isLoading: addRoadMapLoading } = useQuery({
-    queryKey: ["roadMap"],
-    queryFn: addQuery,
-  });
+  instance
+    .get(`/save/${userId}/roadmap`, config)
+    .then((res) => setAddRoadMap(res.data));
 
   const handleLogout = () => {
     window.localStorage.clear();
@@ -157,9 +151,7 @@ const MyPage = () => {
         </Flex>
         {myRoadMap === 2 ? (
           <Flex flexDirection={"column"} gap={"10px"} marginBottom={"30px"}>
-            {addRoadMapLoading ? (
-              <LoadingPage />
-            ) : addRoadMap?.length > 0 ? (
+            {addRoadMap?.length > 0 ? (
               addRoadMap.map((data: roadMap) => (
                 <Projects key={data.roadmapId} data={data} />
               ))
