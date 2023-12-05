@@ -19,6 +19,7 @@ const MyPage = () => {
   const [user, setUser] = useState<유저데이터>();
   const [userId, setUserId] = useRecoilState(유저아이디);
 
+  // user
   const useInfoQuery = () => {
     return useQuery({
       queryKey: ["user"],
