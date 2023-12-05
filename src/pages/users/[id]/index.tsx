@@ -9,13 +9,15 @@ import instance from "@/apis/httpClient";
 import { roadMap } from "@/interface/로드맵";
 import LoadingPage from "@/components/Loading";
 import Storage from "@/storage";
+import { getUser } from "@/apis";
 
-const Useres = () => {
+const Users = () => {
   const [myRoadMap, setMyRoadMap] = useState(1);
   const router = useRouter();
   const [user, setUser] = useState<유저데이터>();
   const { id } = router.query;
 
+  // user
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -41,33 +43,32 @@ const Useres = () => {
       };
 
       return instance
-        .get(`/user/${user?.userId}/roadmap`, config)
+        .get(`/user/${id}/roadmap`, config)
         .then((res) => res.data);
     },
     {
-      enabled: !!user?.userId,
+      enabled: !!id,
     }
   );
 
-  const { data: addRoadMap, isLoading: addRoadMapLoading } = useQuery(
-    ["roadMap"],
-    () => {
-      const config = {
-        headers: {
-          Authorization: token,
-        },
-      };
-
-      return instance
-        .get(`/save/${user?.userId}/roadmap`, config)
-        .then((res) => res.data);
+  const config = {
+    headers: {
+      Authorization: token,
     },
+  };
+
+  const { data: addRoadMap, isSuccess: addRoadMapSuccess } = useQuery(
+    ["roadMap", id],
+    () => instance.get(`/save/${id}/roadmap`, config).then((res) => res.data),
     {
-      enabled: !!user?.userId,
+      enabled: !!id,
     }
   );
 
-  console.log("userId", user?.userId);
+  const handleLogout = () => {
+    window.localStorage.clear();
+    router.push("/", undefined, { shallow: true });
+  };
 
   return (
     <Box maxWidth={"800px"} margin={"0 auto"}>
@@ -137,9 +138,7 @@ const Useres = () => {
         </Flex>
         {myRoadMap === 2 ? (
           <Flex flexDirection={"column"} gap={"10px"} marginBottom={"30px"}>
-            {addRoadMapLoading ? (
-              <LoadingPage />
-            ) : addRoadMap?.length > 0 ? (
+            {addRoadMap?.length > 0 ? (
               addRoadMap.map((data: roadMap) => (
                 <Projects key={data.roadmapId} data={data} />
               ))
@@ -181,4 +180,4 @@ const Useres = () => {
   );
 };
 
-export default Useres;
+export default Users;

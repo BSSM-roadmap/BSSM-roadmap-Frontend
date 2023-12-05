@@ -18,7 +18,6 @@ const MyPage = () => {
   const router = useRouter();
   const [user, setUser] = useState<유저데이터>();
   const [userId, setUserId] = useRecoilState(유저아이디);
-  const [addRoadMap, setAddRoadMap] = useState([]);
 
   // user
   const useInfoQuery = () => {
@@ -60,9 +59,14 @@ const MyPage = () => {
     },
   };
 
-  instance
-    .get(`/save/${userId}/roadmap`, config)
-    .then((res) => setAddRoadMap(res.data));
+  const { data: addRoadMap, isSuccess: addRoadMapSuccess } = useQuery(
+    ["roadMap", userId],
+    () =>
+      instance.get(`/save/${userId}/roadmap`, config).then((res) => res.data),
+    {
+      enabled: !!userId,
+    }
+  );
 
   const handleLogout = () => {
     window.localStorage.clear();
