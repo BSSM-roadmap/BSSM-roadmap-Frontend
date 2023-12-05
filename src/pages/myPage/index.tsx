@@ -1,6 +1,6 @@
 import { Box, Flex, Text } from "@chakra-ui/react";
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import Projects from "@/components/Projects";
 import { useRouter } from "next/router";
 import { 유저데이터 } from "@/interface/유저인터페이스";
@@ -18,6 +18,7 @@ const MyPage = () => {
   const router = useRouter();
   const [user, setUser] = useState<유저데이터>();
   const [userId, setUserId] = useRecoilState(유저아이디);
+  const [addRoadMap, setAddRoadMap] = useState([]);
 
   // user
   const useInfoQuery = () => {
@@ -53,30 +54,27 @@ const MyPage = () => {
     }
   );
 
-  const { data: addRoadMap, isLoading: addRoadMapLoading } = useQuery(
-    ["roadMap"],
-    () => {
-      const config = {
-        headers: {
-          Authorization: token,
-        },
-      };
-
-      return instance
-        .get(`/save/${userId}/roadmap`, config)
-        .then((res) => res.data);
+  const config = {
+    headers: {
+      Authorization: token,
     },
-    {
-      enabled: !!userId,
-    }
-  );
+  };
+
+  const addQuery = () =>
+    instance
+      .get(`/save/${userId}/roadmap`, config)
+      .then((res) => setAddRoadMap(res.data));
+
+  const { data, isLoading: addRoadMapLoading } = useQuery({
+    queryKey: ["roadMap"],
+    queryFn: addQuery,
+  });
+
   const handleLogout = () => {
     window.localStorage.clear();
     router.push("/", undefined, { shallow: true });
   };
 
-  console.log("userRoadMap", userRoadMap);
-  console.log("addRoadMap", addRoadMap);
   return (
     <Box maxWidth={"800px"} margin={"0 auto"}>
       <Flex
